@@ -33,5 +33,8 @@
     "sass-loader": "^8.0.0",
     "typescript": "~3.5.3",
     "vue-template-compiler": "^2.6.10"
-  }
+  },
+  "main": "index.js",
+  "author": "Kodziak <kodziak1416@gmail.com>",
+  "license": "MIT"
 }
