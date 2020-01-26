@@ -27,14 +27,13 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
+@Component
 export default class Register extends Vue {
-      email = '';
-
-      password = '';
-
-      passwordConfirmation = '';
+      email: string = '';
+      password: string = '';
+      passwordConfirmation: string = '';
 
       back(e: Event): void {
         e.preventDefault();

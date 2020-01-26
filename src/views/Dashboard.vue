@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
 @Component
 export default class Dashboard extends Vue {

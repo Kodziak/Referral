@@ -15,6 +15,7 @@
       <div>
         <button id="back" type="button" @click="back">Back</button>
         <button type="submit" @click="signIn">Login</button>
+        <button type="submit" @click="forgotPassword">Forgot password</button>
       </div>
     </form>
   </div>
@@ -22,12 +23,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
 @Component
 export default class Login extends Vue {
       email: string = '';
-
       password: string = '';
 
       back(e: Event): void {
@@ -43,6 +43,10 @@ export default class Login extends Vue {
         }, (err): void => {
           alert('Bad credentials');
         });
+      }
+
+      forgotPassword(e: Event): void {
+        this.$router.push('forgot-password');
       }
 }
 </script>
