@@ -14,48 +14,45 @@
 
       <label for="password-confirm">Confirm Password</label>
       <div>
-        <input id="password-confirm" type="password" v-model="password_confirmation" required />
+        <input id="password-confirm" type="password" v-model="passwordConfirmation" required />
       </div>
 
       <div>
-        <button id="back" type="submit" @click="back">Back</button>
+        <button id="back" type="button" @click="back">Back</button>
         <button type="submit" @click="register">Register</button>
       </div>
     </form>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
 import firebase from 'firebase';
 
-export default {
-  props: ['nextUrl'],
-  data() {
-    return {
-      email: '',
-      password: '',
-      password_confirmation: '',
-    };
-  },
-  methods: {
-    back(e) {
-      e.preventDefault();
-      this.$router.push('/');
-    },
+export default class Register extends Vue {
+      email = '';
 
-    register(e) {
-      e.preventDefault();
+      password = '';
 
-      if (this.password === this.password_confirmation && this.email !== '' && this.password !== '') {
-        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
-          this.$router.push('dashboard');
-        }, (err) => {
-          alert('Bad credentials');
-        });
-      } else {
-        alert('Put credentials');
+      passwordConfirmation = '';
+
+      back(e: Event): void {
+        e.preventDefault();
+        this.$router.push('/');
       }
-    },
-  },
-};
+
+      register(e: Event): void {
+        e.preventDefault();
+
+        if (this.password === this.passwordConfirmation && this.email !== '' && this.password !== '') {
+          firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
+            this.$router.push('dashboard');
+          }, (err) => {
+            alert('Bad credentials');
+          });
+        } else {
+          alert('Put credentials');
+        }
+      }
+}
 </script>

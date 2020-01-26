@@ -13,40 +13,38 @@
         </div>
       </div>
       <div>
-        <button id="back" type="submit" @click="back">Back</button>
+        <button id="back" type="button" @click="back">Back</button>
         <button type="submit" @click="signIn">Login</button>
       </div>
     </form>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
 import firebase from 'firebase';
 
-export default {
-  data() {
-    return {
-      email: '',
-      password: '',
-    };
-  },
-  methods: {
-    back(e) {
-      e.preventDefault();
-      this.$router.push('/');
-    },
+@Component
+export default class Login extends Vue {
+      email: string = '';
 
-    signIn(e) {
-      e.preventDefault();
+      password: string = '';
 
-      firebase.auth().signInWithEmailAndPassword(this.email, this.password).then((user) => {
-        this.$router.push('dashboard');
-      }, (err) => {
-        alert('Bad credentials');
-      });
-    },
-  },
-};
+      back(e: Event): void {
+        e.preventDefault();
+        this.$router.push('/');
+      }
+
+      signIn(e: Event): void {
+        e.preventDefault();
+
+        firebase.auth().signInWithEmailAndPassword(this.email, this.password).then((user): void => {
+          this.$router.push('dashboard');
+        }, (err): void => {
+          alert('Bad credentials');
+        });
+      }
+}
 </script>
 
 <style lang="scss">
