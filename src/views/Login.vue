@@ -13,9 +13,9 @@
         </div>
       </div>
       <div>
-        <button id="back" type="button" @click="back">Back</button>
-        <button type="submit" @click="signIn">Login</button>
-        <button type="submit" @click="forgotPassword">Forgot password</button>
+        <button id="back" type="button" @click.prevent="back">Back</button>
+        <button type="submit" @click.prevent="signIn">Login</button>
+        <button type="submit" @click.prevent="forgotPassword">Forgot password</button>
       </div>
     </form>
   </div>
@@ -31,13 +31,10 @@ export default class Login extends Vue {
       password: string = '';
 
       back(e: Event): void {
-        e.preventDefault();
         this.$router.push('/');
       }
 
       signIn(e: Event): void {
-        e.preventDefault();
-
         firebase.auth().signInWithEmailAndPassword(this.email, this.password).then((user): void => {
           this.$router.push('dashboard');
         }, (err): void => {

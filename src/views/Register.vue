@@ -18,8 +18,8 @@
       </div>
 
       <div>
-        <button id="back" type="button" @click="back">Back</button>
-        <button type="submit" @click="register">Register</button>
+        <button id="back" type="button" @click.prevent="back">Back</button>
+        <button type="submit" @click.prevent="register">Register</button>
       </div>
     </form>
   </div>
@@ -36,13 +36,10 @@ export default class Register extends Vue {
       passwordConfirmation: string = '';
 
       back(e: Event): void {
-        e.preventDefault();
         this.$router.push('/');
       }
 
       register(e: Event): void {
-        e.preventDefault();
-
         if (this.password === this.passwordConfirmation && this.email !== '' && this.password !== '') {
           firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
             this.$router.push('dashboard');

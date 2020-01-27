@@ -12,6 +12,10 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
+    'import/no-unresolved': [
+      2, 
+      { "caseSensitive": false }
+   ]
   },
   parserOptions: {
     parser: '@typescript-eslint/parser',

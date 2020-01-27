@@ -1,7 +1,9 @@
 <template>
-  <div class="about">
+  <div class="dashboard">
     <h1>Secure dashboard, welcome {{name}}</h1>
-    <button type="submit" @click="signOut">Sign out</button>
+    <button type="submit" @click.prevent="signOut">Sign out</button>
+    <button type="submit" @click.prevent="changePassword">Change password</button>
+    <button type="submit" @click.prevent="addReferral">Add new referral</button>
   </div>
 </template>
 
@@ -23,11 +25,17 @@ export default class Dashboard extends Vue {
     });
   }
 
-  signOut(e: Event) {
-    e.preventDefault();
-
+  signOut(e: Event): void {
     firebase.auth().signOut();
     this.$router.push('/').catch((err: any) => {});
+  }
+
+  changePassword(e: Event): void {
+    this.$router.push('/change-password');
+  }
+
+  addReferral(e: Event): void {
+    this.$router.push('/add-new-referral');
   }
 }
 </script>
