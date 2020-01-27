@@ -27,7 +27,7 @@ export default class Dashboard extends Vue {
     e.preventDefault();
 
     firebase.auth().signOut();
-    this.$router.push('/');
+    this.$router.push('/').catch((err: any) => {});
   }
 }
 </script>

@@ -47,10 +47,10 @@ export default class Register extends Vue {
           firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
             this.$router.push('dashboard');
           }, (err) => {
-            alert('Bad credentials');
+            console.log(err);
           });
         } else {
-          alert('Put credentials');
+          console.log('Empty credentials');
         }
       }
 }
