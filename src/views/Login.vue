@@ -13,40 +13,42 @@
         </div>
       </div>
       <div>
-        <button id="back" type="submit" @click="back">Back</button>
+        <button id="back" type="button" @click="back">Back</button>
         <button type="submit" @click="signIn">Login</button>
+        <button type="submit" @click="forgotPassword">Forgot password</button>
       </div>
     </form>
   </div>
 </template>
 
-<script>
-import firebase from 'firebase';
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import * as firebase from 'firebase';
 
-export default {
-  data() {
-    return {
-      email: '',
-      password: '',
-    };
-  },
-  methods: {
-    back(e) {
-      e.preventDefault();
-      this.$router.push('/');
-    },
+@Component
+export default class Login extends Vue {
+      email: string = '';
+      password: string = '';
 
-    signIn(e) {
-      e.preventDefault();
+      back(e: Event): void {
+        e.preventDefault();
+        this.$router.push('/');
+      }
 
-      firebase.auth().signInWithEmailAndPassword(this.email, this.password).then((user) => {
-        this.$router.push('dashboard');
-      }, (err) => {
-        alert('Bad credentials');
-      });
-    },
-  },
-};
+      signIn(e: Event): void {
+        e.preventDefault();
+
+        firebase.auth().signInWithEmailAndPassword(this.email, this.password).then((user): void => {
+          this.$router.push('dashboard');
+        }, (err): void => {
+          alert('Bad credentials');
+        });
+      }
+
+      forgotPassword(e: Event): void {
+        this.$router.push('forgot-password');
+      }
+}
 </script>
 
 <style lang="scss">

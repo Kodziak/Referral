@@ -1,22 +1,33 @@
 <template>
   <div class="about">
-    <h1>Secure dashboard</h1>
+    <h1>Secure dashboard, welcome {{name}}</h1>
     <button type="submit" @click="signOut">Sign out</button>
   </div>
 </template>
 
-<script>
-import firebase from 'firebase';
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import * as firebase from 'firebase';
 
-export default {
+@Component
+export default class Dashboard extends Vue {
+  name: string | null = '';
 
-  methods: {
-    signOut(e) {
-      e.preventDefault();
+  created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.name = user.email;
+      } else {
+        this.$router.push('/');
+      }
+    });
+  }
 
-      firebase.auth().signOut();
-      this.$router.push('/');
-    },
-  },
-};
+  signOut(e: Event) {
+    e.preventDefault();
+
+    firebase.auth().signOut();
+    this.$router.push('/').catch((err: any) => {});
+  }
+}
 </script>
