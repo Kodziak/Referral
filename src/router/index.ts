@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import * as firebase from 'firebase';
 
 Vue.use(VueRouter);
 
@@ -18,6 +19,9 @@ const routes = [
     path: '/dashboard',
     name: 'dashboard',
     component: () => import('../views/Dashboard.vue'),
+    meta: {
+      auth: true,
+    },
   },
   {
     path: '/login',
@@ -38,11 +42,17 @@ const routes = [
     path: '/change-password',
     name: 'change-password',
     component: () => import('../views/ChangePassword.vue'),
+    meta: {
+      auth: true,
+    },
   },
   {
     path: '/add-new-referral',
     name: 'add-new-referral',
     component: () => import('../views/AddNewReferral.vue'),
+    meta: {
+      auth: true,
+    },
   },
 ];
 
@@ -51,23 +61,14 @@ const router = new VueRouter({
 });
 
 // router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     if (localStorage.getItem('jwt') == null) {
-//       next({
-//         path: '/',
-//         params: { nextUrl: to.fullPath },
-//       });
-//     } else if (to.matched.some(record => record.meta.is_admin)) {
-//       next({ name: 'dashboard' });
-//     } else {
-//       next();
-//     }
-//   } else if (to.matched.some(record => record.meta.guest)) {
-//     if (localStorage.getItem('jwt') == null) {
-//       next();
-//     } else {
-//       next({ name: 'dashboard' });
-//     }
+//   if (to.matched.some(record => record.meta.auth)) {
+//     firebase.auth().onAuthStateChanged((user) => {
+//       if (user) {
+//         next('dashboard');
+//       } else {
+//         next('/');
+//       }
+//     });
 //   } else {
 //     next();
 //   }
