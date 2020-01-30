@@ -4,55 +4,59 @@
     <button type="submit" @click.prevent="signOut">Sign out</button>
     <button type="submit" @click.prevent="changePassword">Change password</button>
     <button type="submit" @click.prevent="addReferral">Add new referral</button>
-    <li class="collection-item" v-for="referral in referrals" :key="referral.id">
-      {{referral.title}} - {{referral.baseUrl}} - {{referral.referralUrl}} - {{referral.createdAt}}
-    </li>
+    <div class="referrals">
+      <ReferralCard v-for="referral in referrals" :key="referral.id" :referral="referral" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
+/* eslint-disable class-methods-use-this */
 import { Component, Vue } from 'vue-property-decorator';
 import * as firebase from 'firebase';
+import ReferralCard from '../components/ReferralCard.vue';
 
-@Component
+@Component({
+  components: {
+    ReferralCard,
+  },
+})
 export default class Dashboard extends Vue {
   name: string | null = '';
-
   referrals: firebase.firestore.DocumentData = [];
+
+  user = firebase.auth().currentUser;
 
   created() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.name = user.email;
+        this.getReferrals();
       } else {
         this.$router.push('/');
       }
     });
-
-    this.getReferrals();
   }
 
-  signOut(e: Event): void {
+  signOut(): void {
     firebase.auth().signOut();
     this.$router.push('/').catch((err: any) => {});
   }
 
-  changePassword(e: Event): void {
+  changePassword(): void {
     this.$router.push('/change-password');
   }
 
-  addReferral(e: Event): void {
+  addReferral(): void {
     this.$router.push('/add-new-referral');
   }
 
   async getReferrals(): Promise<void> {
-    const user = firebase.auth().currentUser;
-
-    if (user) {
+    if (this.user) {
       const refs = await firebase
         .firestore()
         .collection('users')
-        .doc(user.uid)
+        .doc(this.user.uid)
         .collection('referrals');
 
       refs.onSnapshot((ref) => {
@@ -67,3 +71,12 @@ export default class Dashboard extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+.referrals {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+</style>

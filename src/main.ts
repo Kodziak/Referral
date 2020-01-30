@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import VueClipboard from 'vue-clipboard2';
 import firebase from 'firebase';
 import App from './App.vue';
 import router from './router';
@@ -19,6 +20,8 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
+
+Vue.use(VueClipboard);
 
 new Vue({
   router,
