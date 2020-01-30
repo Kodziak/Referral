@@ -1,31 +1,19 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <button type="submit" @click="gotoLogin">Login</button>
-    <button type="submit" @click="gotoRegister">Register</button>
+    <RouteChange v-for="route in routes" :key="route" :route="route" />
   </div>
 </template>
 
-<script>
-import HelloWorld from '@/components/HelloWorld.vue';
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import RouteChange from '../components/buttons/RouteChange.vue';
 
-export default {
-  name: 'home',
+@Component({
   components: {
-    HelloWorld,
+    RouteChange,
   },
-  methods: {
-    gotoLogin(e) {
-      e.preventDefault();
-
-      this.$router.push('login');
-    },
-    gotoRegister(e) {
-      e.preventDefault();
-
-      this.$router.push('register');
-    },
-  },
-};
+})
+export default class Home extends Vue {
+  routes: {target: string; title: string}[] = [{ target: 'login', title: 'Login' }, { target: 'register', title: 'Register' }]
+}
 </script>

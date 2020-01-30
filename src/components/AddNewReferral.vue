@@ -19,6 +19,12 @@
         <input id="base_url" type="text" v-model="referral.baseUrl" required />
       </div>
     </div>
+    <div>
+      <label for="description">Description</label>
+      <div>
+        <input id="description" type="text" v-model="referral.description" required />
+      </div>
+    </div>
     <button id="back" type="button" @click.prevent="back">Back</button>
     <button id="add_referral" type="submit" @click.prevent="addReferral">Add Referral</button>
   </div>
@@ -31,10 +37,11 @@ import * as firebase from 'firebase';
 
 @Component
 export default class AddReferral extends Vue {
-  referral: {title: string; url: string; baseUrl: string} = {
+  referral: {title: string; url: string; baseUrl: string; description: string} = {
     title: '',
     url: '',
     baseUrl: '',
+    description: '',
   }
 
   back(e: Event): void {
@@ -55,6 +62,7 @@ export default class AddReferral extends Vue {
           title: this.referral.title,
           baseUrl: this.referral.baseUrl,
           referralUrl: this.referral.url,
+          description: this.referral.description,
           createdAt: Date.now(),
         });
       this.$router.push('dashboard');

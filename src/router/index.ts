@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import * as firebase from 'firebase';
+// import * as firebase from 'firebase';
 
 Vue.use(VueRouter);
 
@@ -49,7 +49,7 @@ const routes = [
   {
     path: '/add-new-referral',
     name: 'add-new-referral',
-    component: () => import('../views/AddNewReferral.vue'),
+    component: () => import('../components/AddNewReferral.vue'),
     meta: {
       auth: true,
     },

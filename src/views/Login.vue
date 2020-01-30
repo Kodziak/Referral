@@ -12,10 +12,9 @@
           <input id="password" type="password" v-model="password" required />
         </div>
       </div>
-      <div>
-        <button id="back" type="button" @click.prevent="back">Back</button>
-        <button type="submit" @click.prevent="signIn">Login</button>
-        <button type="submit" @click.prevent="forgotPassword">Forgot password</button>
+      <div class="buttons">
+        <RouteChange v-for="route in routes" :key="route" :route="route" />
+        <button class="btn-menu" type="submit" @click.prevent="signIn">Login</button>
       </div>
     </form>
   </div>
@@ -24,14 +23,25 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import * as firebase from 'firebase';
+import RouteChange from '../components/buttons/RouteChange.vue';
 
-@Component
+@Component({
+  components: {
+    RouteChange,
+  },
+})
 export default class Login extends Vue {
       email: string = '';
       password: string = '';
 
-      back(e: Event): void {
-        this.$router.push('/');
+      routes = [{ target: '/', title: 'Back' }, { target: 'forgot-password', title: 'Forgot password' }]
+
+      created() {
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            this.$router.push('dashboard');
+          }
+        });
       }
 
       signIn(e: Event): void {
@@ -41,10 +51,6 @@ export default class Login extends Vue {
           alert('Bad credentials');
         });
       }
-
-      forgotPassword(e: Event): void {
-        this.$router.push('forgot-password');
-      }
 }
 </script>
 
@@ -53,5 +59,9 @@ input {
   width: 300px;
   height: 40px;
   font-size: 16px;
+}
+
+.buttons {
+  margin-top: 30px;
 }
 </style>

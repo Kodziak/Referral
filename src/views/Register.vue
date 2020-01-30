@@ -35,6 +35,14 @@ export default class Register extends Vue {
       password: string = '';
       passwordConfirmation: string = '';
 
+      created() {
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            this.$router.push('/dashboard');
+          }
+        });
+      }
+
       back(e: Event): void {
         this.$router.push('/');
       }

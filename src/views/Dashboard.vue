@@ -1,9 +1,9 @@
 <template>
   <div class="dashboard">
     <h1>Secure dashboard, welcome {{name}}</h1>
-    <button type="submit" @click.prevent="signOut">Sign out</button>
-    <button type="submit" @click.prevent="changePassword">Change password</button>
-    <button type="submit" @click.prevent="addReferral">Add new referral</button>
+    <button class="btn-menu" type="submit" @click.prevent="signOut">Sign out</button>
+    <router-link class="btn-menu" to="/change-password">Change Password</router-link>
+    <router-link class="btn-menu" to="/add-new-referral">Add new referral</router-link>
     <div class="referrals">
       <ReferralCard v-for="referral in referrals" :key="referral.id" :referral="referral" />
     </div>
@@ -33,7 +33,7 @@ export default class Dashboard extends Vue {
         this.name = user.email;
         this.getReferrals();
       } else {
-        this.$router.push('/');
+        this.$router.push('login');
       }
     });
   }
@@ -41,14 +41,6 @@ export default class Dashboard extends Vue {
   signOut(): void {
     firebase.auth().signOut();
     this.$router.push('/').catch((err: any) => {});
-  }
-
-  changePassword(): void {
-    this.$router.push('/change-password');
-  }
-
-  addReferral(): void {
-    this.$router.push('/add-new-referral');
   }
 
   async getReferrals(): Promise<void> {

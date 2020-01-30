@@ -30,6 +30,7 @@
 
 <script lang="ts">
 /* eslint-disable class-methods-use-this */
+/* eslint-disable no-alert */
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import * as firebase from 'firebase';
 
@@ -68,7 +69,7 @@ export default class ReferralCard extends Vue {
   }
 
   onCopy(e: Event): void {
-    alert(`You just copied: ${e.text}`);
+    // alert(`You just copied: ${e.text}`);
   }
 
   onError(e: Event): void {
