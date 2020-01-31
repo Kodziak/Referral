@@ -46,14 +46,6 @@ const routes = [
       auth: true,
     },
   },
-  {
-    path: '/add-new-referral',
-    name: 'add-new-referral',
-    component: () => import('../components/AddNewReferral.vue'),
-    meta: {
-      auth: true,
-    },
-  },
 ];
 
 const router = new VueRouter({

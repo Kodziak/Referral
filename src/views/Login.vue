@@ -13,7 +13,7 @@
         </div>
       </div>
       <div class="buttons">
-        <RouteChange v-for="route in routes" :key="route" :route="route" />
+        <route-change v-for="(route, index) in routes" :key="index" :route="route" />
         <button class="btn-menu" type="submit" @click.prevent="signIn">Login</button>
       </div>
     </form>
@@ -46,7 +46,7 @@ export default class Login extends Vue {
 
       signIn(e: Event): void {
         firebase.auth().signInWithEmailAndPassword(this.email, this.password).then((user): void => {
-          this.$router.push('dashboard');
+          this.$router.push('dashboard').catch((err) => {});
         }, (err): void => {
           alert('Bad credentials');
         });
