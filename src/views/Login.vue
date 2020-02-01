@@ -4,19 +4,13 @@
       <h4>Login</h4>
       <form class="login-form">
         <ref-label-input
-          v-model="email"
-          label-id="login-email"
-          label="E-mail"
-          type="email"
-          @value-changed="updateEmail"
-        />
-
-        <ref-label-input
-          v-model="password"
-          label-id="login-password"
-          label="Password"
-          type="password"
-          @value-changed="updatePassword"
+          v-for="(input, index) in inputs"
+          :key="index"
+          v-model="input.vmodel"
+          :label-id="input.id"
+          :label="input.label"
+          :type="input.type"
+          @value-changed="input.func"
         />
       </form>
     </div>
@@ -67,14 +61,26 @@ export default class Login extends Vue {
   }
 
   updateEmail(value: string) {
-    console.log('email', value);
     this.email = value;
   }
 
   updatePassword(value: string) {
-    console.log('password', value);
     this.password = value;
   }
+
+  private inputs = [{
+    vmodel: this.email,
+    id: 'login-email',
+    label: 'E-mail',
+    type: 'email',
+    func: this.updateEmail,
+  }, {
+    vmodel: this.password,
+    id: 'login-password',
+    label: 'Password',
+    type: 'password',
+    func: this.updatePassword,
+  }]
 
   signIn(): void {
     console.log('cred:', this.email, this.password);

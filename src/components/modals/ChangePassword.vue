@@ -30,7 +30,11 @@
             <ref-label-input
               v-for="(input, index) in inputs"
               :key="index"
-              :data="input"
+              v-model="input.vmodel"
+              :label-id="input.id"
+              :label="input.label"
+              :type="input.type"
+              @value-changed="input.func"
             />
           </form>
         </section>
@@ -62,20 +66,30 @@ import RefButton from '@/components/buttons/RefButton.vue';
   },
 })
 export default class ChangePassword extends Vue {
-  inputs = [{
-    title: 'New password',
-    id: 'password',
-    vmodel: 'password',
-    type: 'password',
-  }, {
-    title: 'Repeat new password',
-    id: 'repeat-password',
-    vmodel: 'repeatPassword',
-    type: 'password',
-  }];
+  private password: string = '';
+  private repeatPassword: string = '';
 
-  password: string = '';
-  repeatPassword: string = '';
+  updatePassword(value: string) {
+    this.password = value;
+  }
+
+  updateRepeatPassword(value: string) {
+    this.password = value;
+  }
+
+  private inputs = [{
+    vmodel: this.password,
+    id: 'change-password',
+    label: 'New Password',
+    type: 'password',
+    func: this.updatePassword,
+  }, {
+    vmodel: this.repeatPassword,
+    id: 'change-repeat-password',
+    label: 'Repeat Password',
+    type: 'password',
+    func: this.updateRepeatPassword,
+  }]
 
 @Emit('close')
   close():void {

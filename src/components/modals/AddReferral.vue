@@ -98,25 +98,20 @@
               >
             </div>
           </div>
-          <!-- <ref-label-input
-            v-for="(input, index) in inputs"
-            :key="index"
-            :data="input"
-          /> -->
         </section>
 
         <footer class="modal-footer">
           <ref-button
             v-if="referralVal"
             type="submit"
-            @click.prevent="updateReferral(referralVal)"
+            @click.native="updateReferral(referralVal)"
           >
             Update
           </ref-button>
           <ref-button
             v-else
             type="submit"
-            @click.prevent="addReferral"
+            @click.native="addReferral"
           >
             Add Referral
           </ref-button>
@@ -146,18 +141,6 @@ import RefButton from '@/components/buttons/RefButton.vue';
   },
 })
 export default class RefModal extends Vue {
-  // private inputs = [{
-  //   title: 'Title',
-  //   id: 'ref-title',
-  //   vmodel: 'referral.title',
-  //   type: 'text',
-  // }, {
-  //   title: 'Repeat new password',
-  //   id: 'repeat-password',
-  //   vmodel: 'repeatPassword',
-  //   type: 'password',
-  // }];
-
   private referral: {title: string; referralUrl: string; baseUrl: string; description: string} = {
     title: '',
     referralUrl: '',
