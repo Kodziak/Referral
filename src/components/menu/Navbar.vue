@@ -3,10 +3,9 @@
     <ref-button
       type="button"
       class="btn-menu"
+      title="Change password"
       @click.native="showModal"
-    >
-      Change password
-    </ref-button>
+    />
     <change-password
       v-show="isModalVisible"
       @close="closeModal"

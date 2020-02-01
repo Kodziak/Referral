@@ -48,10 +48,9 @@
     <ref-button
       type="button"
       class="btn-menu"
+      title="Edit"
       @click.native="showModal"
-    >
-      Edit
-    </ref-button>
+    />
     <add-referral
       v-show="isModalVisible"
       :referral-val="referral"

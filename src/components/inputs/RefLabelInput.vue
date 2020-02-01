@@ -13,6 +13,7 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable class-methods-use-this */
 import { Component, Vue, Emit } from 'vue-property-decorator';
 
 @Component({
@@ -24,10 +25,9 @@ import { Component, Vue, Emit } from 'vue-property-decorator';
   },
 })
 export default class RefInput extends Vue {
-@Emit('valueChanged')
+@Emit('value-changed')
   updateInput(event: any) {
-    console.log('input', event.target.value);
-    this.$emit('value-changed', event.target.value);
+    return event.target.value;
   }
 }
 </script>

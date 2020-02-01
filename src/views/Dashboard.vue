@@ -3,10 +3,9 @@
     <ref-button
       class="btn-menu"
       type="submit"
+      title="Sign out"
       @click.native="signOut"
-    >
-      Sign out
-    </ref-button>
+    />
 
     <navbar />
     <h1>Secure dashboard</h1>

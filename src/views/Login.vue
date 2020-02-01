@@ -24,10 +24,9 @@
       <ref-button
         class="btn-menu"
         type="submit"
+        title="Login"
         @click.native="signIn"
-      >
-        Login
-      </ref-button>
+      />
     </div>
   </div>
 </template>

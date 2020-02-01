@@ -104,17 +104,15 @@
           <ref-button
             v-if="referralVal"
             type="submit"
+            title="Update"
             @click.native="updateReferral(referralVal)"
-          >
-            Update
-          </ref-button>
+          />
           <ref-button
             v-else
             type="submit"
+            title="Add Referral"
             @click.native="addReferral"
-          >
-            Add Referral
-          </ref-button>
+          />
         </footer>
       </div>
     </div>

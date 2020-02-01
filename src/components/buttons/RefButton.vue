@@ -1,6 +1,6 @@
 <template>
   <button class="btn-menu">
-    <slot />
+    {{ title }}
   </button>
 </template>
 
@@ -9,6 +9,9 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({
   name: 'RefButton',
+  props: {
+    title: String,
+  },
 })
 export default class RouteChange extends Vue {}
 </script>

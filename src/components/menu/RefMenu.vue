@@ -3,10 +3,9 @@
     <ref-button
       type="button"
       class="btn-menu"
+      title="Open Modal"
       @click.native="showModal"
-    >
-      Open Modal!
-    </ref-button>
+    />
     <add-referral
       v-show="isModalVisible"
       @close="closeModal"
