@@ -1,7 +1,7 @@
 <template>
-    <button class="btn-menu">
-      <slot></slot>
-    </button>
+  <button class="btn-menu">
+    <slot />
+  </button>
 </template>
 
 <script lang="ts">

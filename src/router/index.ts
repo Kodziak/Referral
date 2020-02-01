@@ -38,14 +38,6 @@ const routes = [
     name: 'forgot-password',
     component: () => import('../views/ForgotPassword.vue'),
   },
-  {
-    path: '/change-password',
-    name: 'change-password',
-    component: () => import('../views/ChangePassword.vue'),
-    meta: {
-      auth: true,
-    },
-  },
 ];
 
 const router = new VueRouter({

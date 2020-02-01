@@ -7,6 +7,8 @@ module.exports = {
     'plugin:vue/essential',
     '@vue/airbnb',
     '@vue/typescript',
+    'plugin:vue/recommended',
+    'plugin:vue-scoped-css/recommended'
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',

@@ -1,50 +1,74 @@
 <template>
-<div class="card">
-        <button class="card-delete" @click="deleteCard(referral.id)">x</button>
-        <h3 class="title">{{referral.title}}</h3>
+  <div class="card">
+    <button
+      class="card-delete"
+      @click="deleteCard(referral.id)"
+    >
+      x
+    </button>
+    <h3 class="title">
+      {{ referral.title }}
+    </h3>
 
 
-        <div class="card-input">
-          <p>Referral url:</p>
-          <input type="text"
-            :value="referral.referralUrl"
-            readonly="readonly"
-          >
-          <button class="btn btn-copy"
-            v-clipboard:copy="referral.referralUrl"
-            v-clipboard:success="onCopy"
-            v-clipboard:error="onError"
-          >Copy to clipboard</button>
-        </div>
+    <div class="card-input">
+      <p>Referral url:</p>
+      <input
+        type="text"
+        :value="referral.referralUrl"
+        readonly="readonly"
+      >
+      <button
+        v-clipboard:copy="referral.referralUrl"
+        v-clipboard:success="onCopy"
+        v-clipboard:error="onError"
+        class="btn btn-copy"
+      >
+        Copy to clipboard
+      </button>
+    </div>
 
-        <div class="card-input">
-          <p>Base url:</p>
-          <input type="text" :value="referral.baseUrl" readonly="readonly">
-          <button class="btn btn-copy"
-            v-clipboard:copy="referral.baseUrl"
-            v-clipboard:success="onCopy"
-            v-clipboard:error="onError"
-          >Copy to clipboard</button>
-        </div>
+    <div class="card-input">
+      <p>Base url:</p>
+      <input
+        type="text"
+        :value="referral.baseUrl"
+        readonly="readonly"
+      >
+      <button
+        v-clipboard:copy="referral.baseUrl"
+        v-clipboard:success="onCopy"
+        v-clipboard:error="onError"
+        class="btn btn-copy"
+      >
+        Copy to clipboard
+      </button>
+    </div>
 
-        <ref-button type="button" class="btn-menu" @click.native="showModal">
-            Edit
-        </ref-button>
-        <ref-modal
-          v-show="isModalVisible"
-          @close="closeModal"
-          :referralVal="referral">
-        </ref-modal>
+    <ref-button
+      type="button"
+      class="btn-menu"
+      @click.native="showModal"
+    >
+      Edit
+    </ref-button>
+    <add-referral
+      v-show="isModalVisible"
+      :referral-val="referral"
+      @close="closeModal"
+    />
 
-        <p class="created-at">Created at: <span>{{changeDate(referral.createdAt)}}</span></p>
-      </div>
+    <p class="created-at">
+      Created at: <span>{{ changeDate(referral.createdAt) }}</span>
+    </p>
+  </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import * as firebase from 'firebase';
 import RefButton from '@/components/buttons/RefButton.vue';
-import RefModal from '@/components/modals/RefModal.vue';
+import AddReferral from '@/components/modals/AddReferral.vue';
 
 @Component({
   name: 'RefCard',
@@ -56,7 +80,7 @@ import RefModal from '@/components/modals/RefModal.vue';
   },
   components: {
     RefButton,
-    RefModal,
+    AddReferral,
   },
 })
 export default class RefCard extends Vue {

@@ -1,81 +1,125 @@
 <template>
   <transition name="modal-fade">
     <div class="modal-backdrop">
-      <div class="modal"
+      <div
+        class="modal"
         role="dialog"
         aria-labelledby="modalTitle"
         aria-describedby="modalDescription"
       >
         <header
-          class="modal-header"
           id="modalTitle"
+          class="modal-header"
         >
-            Add new referral
-            <button
-              type="button"
-              class="btn-close"
-              @click.prevent="close"
-              aria-label="Close modal"
-            >
-              x
-            </button>
+          Add new referral
+          <button
+            type="button"
+            class="btn-close"
+            aria-label="Close modal"
+            @click.prevent="close"
+          >
+            x
+          </button>
         </header>
 
         <section
-          class="modal-body"
           id="modalDescription"
+          class="modal-body"
         >
           <div>
-      <label for="name">Name</label>
-      <div>
-        <input
-          v-if="referralVal"
-          type="text"
-          :value="referralVal.title"
-          @input="updateTitle" required />
-        <input v-else type="text" v-model="referral.title" required />
-      </div>
-    </div>
-    <div>
-      <label for="referral_url">Referral URL</label>
-      <div>
-        <input
-          v-if="referralVal"
-          type="text"
-          :value="referralVal.referralUrl"
-          @input="updateReferralUrl" required />
-        <input v-else type="text" v-model="referral.referralUrl" required />
-      </div>
-    </div>
-    <div>
-      <label for="base_url">Base URL</label>
-      <div>
-        <input
-          v-if="referralVal"
-          type="text"
-          :value="referralVal.baseUrl"
-          @input="updateBaseUrl" required />
-        <input v-else type="text" v-model="referral.baseUrl" required />
-      </div>
-    </div>
-    <div>
-      <label for="description">Description</label>
-      <div>
-        <input
-          v-if="referralVal"
-          type="text"
-          :value="referralVal.description"
-          @input="updateDescription" required />
-        <input v-else type="text" v-model="referral.description" required />
-      </div>
-    </div>
+            <label for="name">Name</label>
+            <div>
+              <input
+                v-if="referralVal"
+                type="text"
+                :value="referralVal.title"
+                required
+                @input="updateTitle"
+              >
+              <input
+                v-else
+                v-model="referral.title"
+                type="text"
+                required
+              >
+            </div>
+          </div>
+          <div>
+            <label for="referral_url">Referral URL</label>
+            <div>
+              <input
+                v-if="referralVal"
+                type="text"
+                :value="referralVal.referralUrl"
+                required
+                @input="updateReferralUrl"
+              >
+              <input
+                v-else
+                v-model="referral.referralUrl"
+                type="text"
+                required
+              >
+            </div>
+          </div>
+          <div>
+            <label for="base_url">Base URL</label>
+            <div>
+              <input
+                v-if="referralVal"
+                type="text"
+                :value="referralVal.baseUrl"
+                required
+                @input="updateBaseUrl"
+              >
+              <input
+                v-else
+                v-model="referral.baseUrl"
+                type="text"
+                required
+              >
+            </div>
+          </div>
+          <div>
+            <label for="description">Description</label>
+            <div>
+              <input
+                v-if="referralVal"
+                type="text"
+                :value="referralVal.description"
+                required
+                @input="updateDescription"
+              >
+              <input
+                v-else
+                v-model="referral.description"
+                type="text"
+                required
+              >
+            </div>
+          </div>
+          <!-- <ref-label-input
+            v-for="(input, index) in inputs"
+            :key="index"
+            :data="input"
+          /> -->
         </section>
 
         <footer class="modal-footer">
-          <button v-if="referralVal" type="submit" @click.prevent="updateReferral(referralVal)">
+          <ref-button
+            v-if="referralVal"
+            type="submit"
+            @click.prevent="updateReferral(referralVal)"
+          >
             Update
-          </button>
-          <button v-else type="submit" @click.prevent="addReferral">Add Referral</button>
+          </ref-button>
+          <ref-button
+            v-else
+            type="submit"
+            @click.prevent="addReferral"
+          >
+            Add Referral
+          </ref-button>
         </footer>
       </div>
     </div>
@@ -85,12 +129,15 @@
 <script lang="ts">
 import { Component, Vue, Emit } from 'vue-property-decorator';
 import * as firebase from 'firebase';
-import ReferralService from '@/services/referral.service';
-
-const referralService = new ReferralService();
+import RefLabelInput from '@/components/inputs/RefLabelInput.vue';
+import RefButton from '@/components/buttons/RefButton.vue';
 
 @Component({
   name: 'RefModal',
+  components: {
+    RefLabelInput,
+    RefButton,
+  },
   props: {
     referralVal: {
       type: Object,
@@ -99,6 +146,18 @@ const referralService = new ReferralService();
   },
 })
 export default class RefModal extends Vue {
+  // private inputs = [{
+  //   title: 'Title',
+  //   id: 'ref-title',
+  //   vmodel: 'referral.title',
+  //   type: 'text',
+  // }, {
+  //   title: 'Repeat new password',
+  //   id: 'repeat-password',
+  //   vmodel: 'repeatPassword',
+  //   type: 'password',
+  // }];
+
   private referral: {title: string; referralUrl: string; baseUrl: string; description: string} = {
     title: '',
     referralUrl: '',

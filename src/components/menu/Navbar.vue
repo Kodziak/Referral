@@ -1,13 +1,13 @@
 <template>
-  <div class="ref-menu">
+  <div class="navbar">
     <ref-button
       type="button"
       class="btn-menu"
       @click.native="showModal"
     >
-      Open Modal!
+      Change password
     </ref-button>
-    <add-referral
+    <change-password
       v-show="isModalVisible"
       @close="closeModal"
     />
@@ -18,30 +18,16 @@
 import { Component, Vue } from 'vue-property-decorator';
 import * as firebase from 'firebase';
 import RefButton from '@/components/buttons/RefButton.vue';
-import AddReferral from '@/components/modals/AddReferral.vue';
+import ChangePassword from '@/components/modals/ChangePassword.vue';
 
 @Component({
   components: {
     RefButton,
-    AddReferral,
+    ChangePassword,
   },
 })
-export default class RefMenu extends Vue {
+export default class Navbar extends Vue {
   isModalVisible = false;
-
-  user: firebase.User | null = null;
-
-  async mounted() {
-    await this.getUser();
-  }
-
-  async getUser() {
-    await firebase.auth().onAuthStateChanged((usr) => {
-      if (usr) {
-        this.user = usr;
-      }
-    });
-  }
 
   showModal() {
     this.isModalVisible = true;

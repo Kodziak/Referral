@@ -1,6 +1,10 @@
 <template>
   <div class="home">
-    <route-change v-for="(route, index) in routes" :key="index" :route="route" />
+    <route-change
+      v-for="(route, index) in routes"
+      :key="index"
+      :route="route"
+    />
   </div>
 </template>
 

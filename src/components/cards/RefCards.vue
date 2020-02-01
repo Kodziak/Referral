@@ -1,6 +1,10 @@
 <template>
-    <div class="referrals">
-      <ref-card v-for="(referral, index) in referrals" :key="index" :referral="referral" />
+  <div class="referrals">
+    <ref-card
+      v-for="(referral, index) in referrals"
+      :key="index"
+      :referral="referral"
+    />
   </div>
 </template>
 

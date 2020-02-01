@@ -4,11 +4,28 @@
     <form>
       <label for="email">Email</label>
       <div>
-        <input id="email" type="email" v-model="email" required autofocus />
+        <input
+          id="email"
+          v-model="email"
+          type="email"
+          required
+          autofocus
+        >
       </div>
       <div>
-        <button id="back" type="button" @click="back">Back</button>
-        <button type="submit" @click="forgotPassword">Login</button>
+        <button
+          id="back"
+          type="button"
+          @click="back"
+        >
+          Back
+        </button>
+        <button
+          type="submit"
+          @click="forgotPassword"
+        >
+          Login
+        </button>
       </div>
     </form>
   </div>

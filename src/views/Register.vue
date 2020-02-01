@@ -4,22 +4,48 @@
     <form>
       <label for="email">E-Mail</label>
       <div>
-        <input id="email" type="email" v-model="email" required />
+        <input
+          id="email"
+          v-model="email"
+          type="email"
+          required
+        >
       </div>
 
       <label for="password">Password</label>
       <div>
-        <input id="password" type="password" v-model="password" required />
+        <input
+          id="password"
+          v-model="password"
+          type="password"
+          required
+        >
       </div>
 
       <label for="password-confirm">Confirm Password</label>
       <div>
-        <input id="password-confirm" type="password" v-model="passwordConfirmation" required />
+        <input
+          id="password-confirm"
+          v-model="passwordConfirmation"
+          type="password"
+          required
+        >
       </div>
 
       <div>
-        <button id="back" type="button" @click.prevent="back">Back</button>
-        <button type="submit" @click.prevent="register">Register</button>
+        <button
+          id="back"
+          type="button"
+          @click.prevent="back"
+        >
+          Back
+        </button>
+        <button
+          type="submit"
+          @click.prevent="register"
+        >
+          Register
+        </button>
       </div>
     </form>
   </div>
