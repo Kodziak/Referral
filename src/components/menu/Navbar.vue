@@ -1,15 +1,21 @@
 <template>
   <div class="navbar">
-    <ref-button
-      type="button"
-      class="btn-menu"
-      title="Change password"
-      @click.native="showModal"
-    />
-    <change-password
-      v-show="isModalVisible"
-      @close="closeModal"
-    />
+    <div
+      v-if="user"
+      class="auth-nav"
+    >
+      <ref-button
+        v-for="(button, index) in authButtons"
+        :key="index"
+        :type="button.type"
+        :title="button.title"
+        @click.native="button.click"
+      />
+      <change-password
+        v-show="isModalVisible"
+        @close="closeModal"
+      />
+    </div>
   </div>
 </template>
 
@@ -27,6 +33,21 @@ import ChangePassword from '@/components/modals/ChangePassword.vue';
 })
 export default class Navbar extends Vue {
   isModalVisible = false;
+  user: firebase.User | null = null;
+
+  created() {
+    this.getUser();
+  }
+
+  async getUser() {
+    await firebase.auth().onAuthStateChanged(async (usr) => {
+      if (usr) {
+        this.user = usr;
+      } else {
+        this.user = null;
+      }
+    });
+  }
 
   showModal() {
     this.isModalVisible = true;
@@ -35,6 +56,22 @@ export default class Navbar extends Vue {
   closeModal() {
     this.isModalVisible = false;
   }
+
+  signOut(): void {
+    firebase.auth().signOut();
+    this.getUser();
+    this.$router.push('/').catch((err: any) => {});
+  }
+
+  authButtons = [{
+    type: 'button',
+    title: 'Change password',
+    click: this.showModal,
+  }, {
+    type: 'button',
+    title: 'Sign out',
+    click: this.signOut,
+  }]
 }
 </script>
 

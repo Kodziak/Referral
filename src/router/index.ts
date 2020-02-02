@@ -1,10 +1,18 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-// import * as firebase from 'firebase';
 
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: '*',
+    redirect: '/error',
+  },
+  {
+    path: '/error',
+    name: 'error',
+    component: () => import('../views/Error.vue'),
+  },
   {
     path: '/',
     name: 'home',

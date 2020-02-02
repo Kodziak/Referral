@@ -1,13 +1,5 @@
 <template>
   <div class="dashboard">
-    <ref-button
-      class="btn-menu"
-      type="submit"
-      title="Sign out"
-      @click.native="signOut"
-    />
-
-    <navbar />
     <h1>Secure dashboard</h1>
 
     <ref-menu />
@@ -18,27 +10,26 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import firebase from 'firebase';
-import RefButton from '@/components/buttons/RefButton.vue';
-import RouteChange from '@/components/buttons/RouteChange.vue';
 
-import Navbar from '@/components/menu/Navbar.vue';
 import RefMenu from '@/components/menu/RefMenu.vue';
 import RefCards from '@/components/cards/RefCards.vue';
+
+import userService from '@/services/user.service';
 
 @Component({
   components: {
     RefCards,
     RefMenu,
-
-    Navbar,
-    RefButton,
-    RouteChange,
   },
 })
 export default class Dashboard extends Vue {
-  signOut(): void {
-    firebase.auth().signOut();
-    this.$router.push('/').catch((err: any) => {});
+  user: firebase.User | null = null;
+
+  async created() {
+    this.user = await userService.getUser();
+    if (!this.user) {
+      this.$router.push('/login');
+    }
   }
 }
 </script>

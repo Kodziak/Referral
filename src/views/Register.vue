@@ -55,34 +55,37 @@
 import { Component, Vue } from 'vue-property-decorator';
 import * as firebase from 'firebase';
 
+import userService from '@/services/user.service';
+
 @Component
 export default class Register extends Vue {
-      email: string = '';
-      password: string = '';
-      passwordConfirmation: string = '';
+  private email: string = '';
+  private password: string = '';
+  private passwordConfirmation: string = '';
 
-      created() {
-        firebase.auth().onAuthStateChanged((user) => {
-          if (user) {
-            this.$router.push('/dashboard');
-          }
-        });
-      }
+  private user: firebase.User | null = null;
 
-      back(e: Event): void {
-        this.$router.push('/');
-      }
+  async created() {
+    this.user = await userService.getUser();
+    if (this.user) {
+      this.$router.push('/dashboard');
+    }
+  }
 
-      register(e: Event): void {
-        if (this.password === this.passwordConfirmation && this.email !== '' && this.password !== '') {
-          firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
-            this.$router.push('dashboard');
-          }, (err) => {
-            console.log(err);
-          });
-        } else {
-          console.log('Empty credentials');
-        }
-      }
+  back(e: Event): void {
+    this.$router.push('/');
+  }
+
+  register(e: Event): void {
+    if (this.password === this.passwordConfirmation && this.email !== '' && this.password !== '') {
+      firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
+        this.$router.push('dashboard');
+      }, (err) => {
+        console.log(err);
+      });
+    } else {
+      console.log('Empty credentials');
+    }
+  }
 }
 </script>

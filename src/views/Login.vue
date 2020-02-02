@@ -34,9 +34,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import * as firebase from 'firebase';
+
 import RouteChange from '../components/buttons/RouteChange.vue';
 import RefLabelInput from '@/components/inputs/RefLabelInput.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
+
+import userService from '@/services/user.service';
 
 @Component({
   components: {
@@ -48,15 +51,15 @@ import RefButton from '@/components/buttons/RefButton.vue';
 export default class Login extends Vue {
   private email: string = '';
   private password: string = '';
+  private user: firebase.User | null = null;
 
   private routes = [{ target: '/', title: 'Back' }, { target: 'forgot-password', title: 'Forgot password' }]
 
-  created() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.$router.push('dashboard');
-      }
-    });
+  async created() {
+    this.user = await userService.getUser();
+    if (this.user) {
+      this.$router.push('/dashboard');
+    }
   }
 
   updateEmail(value: string) {
@@ -82,7 +85,6 @@ export default class Login extends Vue {
   }]
 
   signIn(): void {
-    console.log('cred:', this.email, this.password);
     firebase.auth().signInWithEmailAndPassword(this.email, this.password).then((user): void => {
       this.$router.push('dashboard').catch((err) => {});
     }, (err): void => {
