@@ -1,5 +1,9 @@
+/* eslint-disable import/no-cycle */
 import Vue from 'vue';
+import firebase from 'firebase';
 import VueRouter from 'vue-router';
+import localforage from 'localforage';
+import store from '../store/user';
 
 Vue.use(VueRouter);
 
@@ -28,7 +32,7 @@ const routes = [
     name: 'dashboard',
     component: () => import('../views/Dashboard.vue'),
     meta: {
-      auth: true,
+      requiresAuth: true,
     },
   },
   {
@@ -49,21 +53,20 @@ const routes = [
 ];
 
 const router = new VueRouter({
+  mode: 'history',
   routes,
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.auth)) {
-//     firebase.auth().onAuthStateChanged((user) => {
-//       if (user) {
-//         next('dashboard');
-//       } else {
-//         next('/');
-//       }
-//     });
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach(async (to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.userUid) {
+      next();
+    } else {
+      next('/login');
+    }
+  } else {
+    next();
+  }
+});
 
 export default router;

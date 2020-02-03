@@ -1,8 +1,7 @@
 <template>
   <div class="navbar">
     <div
-      v-if="user"
-      class="auth-nav"
+      class="nav"
     >
       <ref-button
         v-for="(button, index) in authButtons"
@@ -16,37 +15,43 @@
         @close="closeModal"
       />
     </div>
+    <div
+
+      class="nav"
+    >
+      <route-change
+        v-for="(button, index) in buttons"
+        :key="index"
+        :to="button.target"
+        :title="button.title"
+      />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import * as firebase from 'firebase';
+
+import RouteChange from '@/components/buttons/RouteChange.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
 import ChangePassword from '@/components/modals/ChangePassword.vue';
 
+import userService from '@/services/user.service';
+
 @Component({
   components: {
+    RouteChange,
     RefButton,
     ChangePassword,
   },
 })
 export default class Navbar extends Vue {
-  isModalVisible = false;
   user: firebase.User | null = null;
+  isModalVisible = false;
 
-  created() {
-    this.getUser();
-  }
-
-  async getUser() {
-    await firebase.auth().onAuthStateChanged(async (usr) => {
-      if (usr) {
-        this.user = usr;
-      } else {
-        this.user = null;
-      }
-    });
+  async created() {
+    this.user = await userService.getUser();
   }
 
   showModal() {
@@ -57,10 +62,8 @@ export default class Navbar extends Vue {
     this.isModalVisible = false;
   }
 
-  signOut(): void {
-    firebase.auth().signOut();
-    this.getUser();
-    this.$router.push('/').catch((err: any) => {});
+  async signOut(): Promise<void> {
+    this.$store.dispatch('logout');
   }
 
   authButtons = [{
@@ -72,14 +75,19 @@ export default class Navbar extends Vue {
     title: 'Sign out',
     click: this.signOut,
   }]
+
+  buttons = [{
+    title: 'Login',
+    target: '/login',
+  }, {
+    title: 'Register',
+    target: '/register',
+  }]
 }
 </script>
 
-<style lang="scss">
-.referrals {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+<style lang="scss" scoped>
+.navbar {
+  margin: 20px;
 }
-
 </style>

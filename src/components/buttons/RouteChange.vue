@@ -1,5 +1,10 @@
 <template>
-    <router-link class="btn-menu" :to="route.target">{{route.title}}</router-link>
+  <router-link
+    class="btn-menu"
+    :to="to"
+  >
+    {{ title }}
+  </router-link>
 </template>
 
 <script lang="ts">
@@ -8,10 +13,8 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component({
   name: 'RouteChange',
   props: {
-    route: {
-      type: Object,
-      required: true,
-    },
+    to: String,
+    title: String,
   },
 })
 export default class RouteChange extends Vue {}

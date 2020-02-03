@@ -27,18 +27,12 @@ export default class Dashboard extends Vue {
 
   async created() {
     this.user = await userService.getUser();
-    if (!this.user) {
-      this.$router.push('/login');
-    }
   }
 }
 </script>
 
-<style lang="scss">
-.referrals {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+<style lang="scss" scoped>
+.dashboard {
 }
 
 </style>

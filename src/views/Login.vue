@@ -19,7 +19,8 @@
       <route-change
         v-for="(route, index) in routes"
         :key="index"
-        :route="route"
+        :to="route.target"
+        :title="route.title"
       />
       <ref-button
         class="btn-menu"
@@ -53,13 +54,10 @@ export default class Login extends Vue {
   private password: string = '';
   private user: firebase.User | null = null;
 
-  private routes = [{ target: '/', title: 'Back' }, { target: 'forgot-password', title: 'Forgot password' }]
+  private routes = [{ target: '/', title: 'Back' }, { target: '/forgot-password', title: 'Forgot password' }]
 
   async created() {
     this.user = await userService.getUser();
-    if (this.user) {
-      this.$router.push('/dashboard');
-    }
   }
 
   updateEmail(value: string) {
@@ -85,10 +83,9 @@ export default class Login extends Vue {
   }]
 
   signIn(): void {
-    firebase.auth().signInWithEmailAndPassword(this.email, this.password).then((user): void => {
-      this.$router.push('dashboard').catch((err) => {});
-    }, (err): void => {
-      console.log('Bad credentials');
+    this.$store.dispatch('login', {
+      email: this.email,
+      password: this.password,
     });
   }
 }
