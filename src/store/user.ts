@@ -15,7 +15,7 @@ const vuexStorage = new VuexPersist<RootState>({
 
 interface RootState {
   userUid: firebase.User | null;
-  user: string | null;
+  email: string | null;
 }
 
 const store: StoreOptions<RootState> = {
@@ -24,11 +24,11 @@ const store: StoreOptions<RootState> = {
 
   state: {
     userUid: null,
-    user: null,
+    email: null,
   },
 
   getters: {
-    userUid() {
+    user() {
       if (localStorage.getItem('userData')) {
         return JSON.parse(localStorage.getItem('userData')!);
       }
@@ -37,14 +37,14 @@ const store: StoreOptions<RootState> = {
   },
 
   mutations: {
-    login(state, user: { userUid: firebase.User | null; user: string | null }) {
+    login(state, user: { userUid: firebase.User | null; email: string | null }) {
       state.userUid = user.userUid;
-      state.user = user.user;
+      state.email = user.email;
     },
 
     logout(state) {
       state.userUid = null;
-      state.user = null;
+      state.email = null;
     },
   },
 
@@ -54,7 +54,7 @@ const store: StoreOptions<RootState> = {
         .then((user) => {
           commit('login', {
             userUid: user.user!.uid,
-            user: user.user!.email,
+            email: user.user!.email,
           });
 
           router.push('/dashboard');

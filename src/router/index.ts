@@ -1,8 +1,6 @@
 /* eslint-disable import/no-cycle */
 import Vue from 'vue';
-import firebase from 'firebase';
 import VueRouter from 'vue-router';
-import localforage from 'localforage';
 import store from '../store/user';
 
 Vue.use(VueRouter);
@@ -39,11 +37,43 @@ const routes = [
     path: '/login',
     name: 'login',
     component: () => import('../views/Login.vue'),
+    beforeEnter: (to: any, from: any, next: any) => {
+      let val: any;
+      const value = localStorage.getItem('userData');
+
+      if (value) {
+        val = JSON.parse(value);
+      } else {
+        val = null;
+      }
+
+      if (val.userUid) {
+        next('/dashboard');
+      } else {
+        next();
+      }
+    },
   },
   {
     path: '/register',
     name: 'register',
     component: () => import('../views/Register.vue'),
+    beforeEnter: (to: any, from: any, next: any) => {
+      let val: any;
+      const value = localStorage.getItem('userData');
+
+      if (value) {
+        val = JSON.parse(value);
+      } else {
+        val = null;
+      }
+
+      if (val.userUid) {
+        next('/dashboard');
+      } else {
+        next();
+      }
+    },
   },
   {
     path: '/forgot-password',
@@ -59,10 +89,17 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.userUid) {
-      next();
+    let val: any;
+    const value = localStorage.getItem('userData');
+
+    if (value) {
+      val = JSON.parse(value);
     } else {
-      next('/login');
+      val = null;
+    }
+
+    if (val.userUid) {
+      next();
     }
   } else {
     next();

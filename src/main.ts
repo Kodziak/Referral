@@ -26,6 +26,24 @@ firebase.analytics();
 Vue.use(VueClipboard);
 Vue.use(VueCookies);
 
+let val: any;
+const value = localStorage.getItem('userData');
+
+if (value) {
+  val = JSON.parse(value);
+} else {
+  val = null;
+}
+
+if (!val) {
+  const values = JSON.stringify({
+    userUid: null,
+    email: null,
+  });
+  localStorage.setItem('userData', values);
+}
+
+
 new Vue({
   store,
   router,
