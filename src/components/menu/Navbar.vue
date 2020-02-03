@@ -1,6 +1,7 @@
 <template>
   <div class="navbar">
     <div
+      v-if="this.$store.getters.userUid"
       class="nav"
     >
       <ref-button
@@ -16,7 +17,7 @@
       />
     </div>
     <div
-
+      v-else
       class="nav"
     >
       <route-change

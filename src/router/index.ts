@@ -1,7 +1,6 @@
-/* eslint-disable import/no-cycle */
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import store from '../store/user';
+import storageService from '../services/storage.service';
 
 Vue.use(VueRouter);
 
@@ -37,43 +36,25 @@ const routes = [
     path: '/login',
     name: 'login',
     component: () => import('../views/Login.vue'),
-    beforeEnter: (to: any, from: any, next: any) => {
-      let val: any;
-      const value = localStorage.getItem('userData');
-
-      if (value) {
-        val = JSON.parse(value);
-      } else {
-        val = null;
-      }
-
-      if (val.userUid) {
-        next('/dashboard');
-      } else {
-        next();
-      }
-    },
+    // beforeEnter: (to: any, from: any, next: any) => {
+    //   if (storageService.getUserData()) {
+    //     next('/dashboard');
+    //   } else {
+    //     next();
+    //   }
+    // },
   },
   {
     path: '/register',
     name: 'register',
     component: () => import('../views/Register.vue'),
-    beforeEnter: (to: any, from: any, next: any) => {
-      let val: any;
-      const value = localStorage.getItem('userData');
-
-      if (value) {
-        val = JSON.parse(value);
-      } else {
-        val = null;
-      }
-
-      if (val.userUid) {
-        next('/dashboard');
-      } else {
-        next();
-      }
-    },
+    // beforeEnter: (to: any, from: any, next: any) => {
+    //   if (storageService.getUserData()) {
+    //     next('/dashboard');
+    //   } else {
+    //     next();
+    //   }
+    // },
   },
   {
     path: '/forgot-password',
@@ -89,17 +70,10 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    let val: any;
-    const value = localStorage.getItem('userData');
-
-    if (value) {
-      val = JSON.parse(value);
-    } else {
-      val = null;
-    }
-
-    if (val.userUid) {
+    if (storageService.getUserData()) {
       next();
+    } else {
+      next('/login');
     }
   } else {
     next();

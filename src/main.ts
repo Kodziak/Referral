@@ -5,6 +5,7 @@ import firebase from 'firebase';
 import App from './App.vue';
 import router from './router';
 import store from './store/user';
+import storageService from '@/services/storage.service';
 import './registerServiceWorker';
 
 Vue.config.productionTip = false;
@@ -26,18 +27,9 @@ firebase.analytics();
 Vue.use(VueClipboard);
 Vue.use(VueCookies);
 
-let val: any;
-const value = localStorage.getItem('userData');
-
-if (value) {
-  val = JSON.parse(value);
-} else {
-  val = null;
-}
-
-if (!val) {
+if (!storageService.getUserData()) {
   const values = JSON.stringify({
-    userUid: null,
+    uid: null,
     email: null,
   });
   localStorage.setItem('userData', values);
