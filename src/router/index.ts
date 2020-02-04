@@ -2,70 +2,19 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import storageService from '../services/storage.service';
 
-Vue.use(VueRouter);
+import userRoutes from './user-routes';
+import authRoutes from './auth-routes';
+import infoRoutes from './info-routes';
 
-const routes = [
-  {
-    path: '*',
-    redirect: '/error',
-  },
-  {
-    path: '/error',
-    name: 'error',
-    component: () => import('../views/Error.vue'),
-  },
-  {
-    path: '/',
-    name: 'home',
-    component: () => import('../views/Home.vue'),
-  },
-  {
-    path: '/about',
-    name: 'about',
-    component: () => import('../views/About.vue'),
-  },
-  {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: () => import('../views/Dashboard.vue'),
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: () => import('../views/Login.vue'),
-    // beforeEnter: (to: any, from: any, next: any) => {
-    //   if (storageService.getUserData()) {
-    //     next('/dashboard');
-    //   } else {
-    //     next();
-    //   }
-    // },
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: () => import('../views/Register.vue'),
-    // beforeEnter: (to: any, from: any, next: any) => {
-    //   if (storageService.getUserData()) {
-    //     next('/dashboard');
-    //   } else {
-    //     next();
-    //   }
-    // },
-  },
-  {
-    path: '/forgot-password',
-    name: 'forgot-password',
-    component: () => import('../views/ForgotPassword.vue'),
-  },
-];
+Vue.use(VueRouter);
 
 const router = new VueRouter({
   mode: 'history',
-  routes,
+  routes: [
+    ...userRoutes,
+    ...authRoutes,
+    ...infoRoutes,
+  ],
 });
 
 router.beforeEach(async (to, from, next) => {

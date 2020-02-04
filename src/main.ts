@@ -4,7 +4,7 @@ import VueCookies from 'vue-cookies';
 import firebase from 'firebase';
 import App from './App.vue';
 import router from './router';
-import store from './store/user';
+import store from './store';
 import storageService from '@/services/storage.service';
 import './registerServiceWorker';
 

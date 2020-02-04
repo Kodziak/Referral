@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
 import firebase from 'firebase';
 import VuexPersist from 'vuex-persist';
-import router from '../router/index';
+import router from '../router';
 import storageService from '../services/storage.service';
 
 Vue.use(Vuex);
