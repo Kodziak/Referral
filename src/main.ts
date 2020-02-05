@@ -28,11 +28,13 @@ Vue.use(VueClipboard);
 Vue.use(VueCookies);
 
 if (!storageService.getUserData()) {
-  const values = JSON.stringify({
-    uid: null,
-    email: null,
+  const userData = JSON.stringify({
+    user: {
+      uid: null,
+      email: null,
+    },
   });
-  localStorage.setItem('userData', values);
+  localStorage.setItem('userData', userData);
 }
 
 

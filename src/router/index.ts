@@ -2,9 +2,9 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import storageService from '../services/storage.service';
 
-import userRoutes from './user-routes';
-import authRoutes from './auth-routes';
-import infoRoutes from './info-routes';
+import userRoutes from './routes/user-routes';
+import authRoutes from './routes/auth-routes';
+import infoRoutes from './routes/info-routes';
 
 Vue.use(VueRouter);
 

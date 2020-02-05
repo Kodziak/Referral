@@ -2,8 +2,9 @@ import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
 import firebase from 'firebase';
 import VuexPersist from 'vuex-persist';
-import router from '../router';
-import storageService from '../services/storage.service';
+
+import user from './modules/user';
+import referral from './modules/referral';
 
 Vue.use(Vuex);
 
@@ -20,49 +21,11 @@ interface RootState {
 const store: StoreOptions<RootState> = {
 
   plugins: [vuexStorage.plugin],
-
-  state: {
-    uid: null,
-    email: null,
+  modules: {
+    user,
+    referral,
   },
 
-  getters: {
-    userData: () => storageService.getUserData(),
-    userUid: state => state.uid,
-  },
-
-  mutations: {
-    login(state, user: { uid: firebase.User | null; email: string | null }) {
-      state.uid = user.uid;
-      state.email = user.email;
-    },
-
-    logout(state) {
-      state.uid = null;
-      state.email = null;
-    },
-  },
-
-  actions: {
-    login({ commit }, authData) {
-      firebase.auth().signInWithEmailAndPassword(authData.email, authData.password)
-        .then((user) => {
-          commit('login', {
-            uid: user.user!.uid,
-            email: user.user!.email,
-          });
-
-          router.push('/dashboard');
-        }, (err) => {
-          console.log('Bad credentials');
-        });
-    },
-
-    logout({ commit }) {
-      commit('logout');
-      router.replace('/').catch(() => {});
-    },
-  },
 };
 
 export default new Vuex.Store<RootState>(store);

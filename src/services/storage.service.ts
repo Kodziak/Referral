@@ -2,11 +2,11 @@
 
 class StorageService {
   getUserData() {
-    let value: any = localStorage.getItem('userData');
-    value = JSON.parse(value);
+    let userData: any = localStorage.getItem('userData');
+    userData = JSON.parse(userData);
 
-    if (value && value.uid && value.email) {
-      return value;
+    if (userData.user.uid && userData.user.email) {
+      return userData;
     }
     return null;
   }
