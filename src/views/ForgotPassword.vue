@@ -16,13 +16,13 @@
         <button
           id="back"
           type="button"
-          @click="back"
+          @click.prevent="back"
         >
           Back
         </button>
         <button
           type="submit"
-          @click="forgotPassword"
+          @click.prevent="forgotPassword"
         >
           Login
         </button>
@@ -40,19 +40,11 @@ export default class forgotPassword extends Vue {
       email: string = '';
 
       back(e: Event): void {
-        e.preventDefault();
         this.$router.push('login');
       }
 
       forgotPassword(e: Event): void {
-        e.preventDefault();
-
-        firebase.auth().sendPasswordResetEmail(this.email).then(() => {
-          this.$router.push('/');
-          // Email sent.
-        }).catch((error) => {
-          // An error happened.
-        });
+        this.$store.dispatch('forgotPassword', this.email);
       }
 }
 </script>

@@ -79,6 +79,14 @@ const user: StoreOptions<UserData> = {
       }
     },
 
+    forgotPassword({ commit }, email) {
+      firebase.auth().sendPasswordResetEmail(email).then(() => {
+        router.push('/');
+      }).catch((error) => {
+        console.error(error);
+      });
+    },
+
   },
 };
 
