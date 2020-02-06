@@ -6,6 +6,7 @@
     >{{ label }}</label>
     <input
       :id="labelId"
+      class="ref-input"
       :type="type"
       @input="updateInput"
     >

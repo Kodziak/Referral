@@ -11,6 +11,7 @@ const user: StoreOptions<UserData> = {
 
   getters: {
     userData: (state:any) => state,
+    currentUser: () => firebase.auth().currentUser,
   },
 
   mutations: {
@@ -67,6 +68,17 @@ const user: StoreOptions<UserData> = {
       commit('signOut');
       router.push('/').catch(() => {});
     },
+
+    changePassword({ commit }, password) {
+      if (this.getters.currentUser) {
+        this.getters.currentUser.updatePassword(password).then(() => {
+          console.log('Updated succesfull');
+        }).catch((err: any) => {
+          console.log(err);
+        });
+      }
+    },
+
   },
 };
 

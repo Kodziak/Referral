@@ -42,10 +42,9 @@
         <footer class="modal-footer">
           <ref-button
             type="submit"
-            :click="changePassword"
-          >
-            Change
-          </ref-button>
+            title="Change"
+            @click="changePassword"
+          />
         </footer>
       </div>
     </div>
@@ -100,12 +99,8 @@ export default class ChangePassword extends Vue {
 changePassword(e: Event): void {
   const user = firebase.auth().currentUser;
   if (user && this.password !== '' && this.password === this.repeatPassword) {
-    user.updatePassword(this.password).then(() => {
-      console.log('Updated succesfull');
-      this.$router.push('dashboard');
-    }).catch((err) => {
-      console.log(err);
-    });
+    this.$store.dispatch('changePassword', this.password);
+    this.close();
   }
 }
 }
