@@ -1,12 +1,12 @@
-// import { shallowMount } from '@vue/test-utils';
-// import HelloWorld from '@/components/HelloWorld.vue';
+import { shallowMount } from '@vue/test-utils';
+import RefButton from '@/components/buttons/RefButton.vue';
 
-// describe('HelloWorld.vue', () => {
-//   it('renders props.msg when passed', () => {
-//     const msg = 'new message';
-//     const wrapper = shallowMount(HelloWorld, {
-//       propsData: { msg },
-//     });
-//     expect(wrapper.text()).toMatch(msg);
-//   });
-// });
+describe('RefButton.vue', () => {
+  it('renders props.title when passed', () => {
+    const title = 'Change Password';
+    const wrapper = shallowMount(RefButton, {
+      propsData: { title },
+    });
+    expect(wrapper.text()).toMatch(title);
+  });
+});
