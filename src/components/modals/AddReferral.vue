@@ -170,9 +170,7 @@ export default class RefModal extends Vue {
     this.referralValNew.description = event.target.value;
   }
 
-
-  @Emit('close')
-  close(): void {
+  clearInputs():void {
     this.referral = {
       title: '',
       referralUrl: '',
@@ -181,23 +179,19 @@ export default class RefModal extends Vue {
     };
   }
 
+  @Emit('close')
+  close(): void {
+    this.clearInputs();
+  }
+
   async addReferral(): Promise<void> {
-    const user = await firebase.auth().currentUser;
+    if (this.referral.title !== '' && this.referral.baseUrl !== '' && this.referral.referralUrl !== '' && this.referral.description !== '') {
+      const data = {
+        user: this.$store.getters.userData,
+        referral: this.referral,
+      };
 
-    if (user && this.referral.title !== '' && this.referral.baseUrl !== '' && this.referral.referralUrl !== '' && this.referral.description !== '') {
-      firebase
-        .firestore()
-        .collection('users')
-        .doc(user.uid)
-        .collection('referrals')
-        .add({
-          title: this.referral.title,
-          baseUrl: this.referral.baseUrl,
-          referralUrl: this.referral.referralUrl,
-          description: this.referral.description,
-          createdAt: Date.now(),
-        });
-
+      this.$store.dispatch('addReferral', data);
       this.close();
     } else {
       console.warn('put data into inputs - add');
@@ -205,8 +199,6 @@ export default class RefModal extends Vue {
   }
 
   async updateReferral(ref: any): Promise<void> {
-    const user = await firebase.auth().currentUser;
-
     if (this.referralValNew.title === '') {
       this.referralValNew.title = ref.title;
     }
@@ -220,20 +212,14 @@ export default class RefModal extends Vue {
       this.referralValNew.description = ref.description;
     }
 
-    if (user && this.referralValNew.title !== '' && this.referralValNew.baseUrl !== '' && this.referralValNew.referralUrl !== '' && this.referralValNew.description !== '') {
-      console.log(this.referralValNew);
-      firebase
-        .firestore()
-        .collection('users')
-        .doc(user.uid)
-        .collection('referrals')
-        .doc(ref.id)
-        .update({
-          title: this.referralValNew.title,
-          baseUrl: this.referralValNew.baseUrl,
-          referralUrl: this.referralValNew.referralUrl,
-          description: this.referralValNew.description,
-        });
+    if (this.referralValNew.title !== '' && this.referralValNew.baseUrl !== '' && this.referralValNew.referralUrl !== '' && this.referralValNew.description !== '') {
+      const data = {
+        user: this.$store.getters.userData,
+        ref,
+        referral: this.referralValNew,
+      };
+
+      this.$store.dispatch('editReferral', data);
 
       this.close();
     } else {

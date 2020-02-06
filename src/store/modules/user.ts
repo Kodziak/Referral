@@ -1,53 +1,70 @@
 import firebase from 'firebase';
 import { StoreOptions } from 'vuex';
+import { AuthData, UserData } from '@/types/user';
 import router from '@/router';
-import storageService from '@/services/storage.service';
 
-interface UserRootState {
-    uid: firebase.User | null;
-    email: string | null;
-  }
-
-const user: StoreOptions<UserRootState> = {
+const user: StoreOptions<UserData> = {
   state: {
     uid: null,
     email: null,
   },
 
   getters: {
-    userData: () => storageService.getUserData(),
-    userUid: (state:any) => state.uid,
+    userData: (state:any) => state,
   },
 
   mutations: {
-    login(state: any, userData: { uid: firebase.User | null; email: string | null }) {
+    signIn(state: any, userData: UserData) {
       state.uid = userData.uid;
       state.email = userData.email;
     },
 
-    logout(state: any) {
+    signOut(state: any) {
       state.uid = null;
       state.email = null;
     },
   },
 
   actions: {
-    login({ commit }, authData: {email: string, password: string}) {
+    signIn({ commit }, authData: AuthData) {
       firebase.auth().signInWithEmailAndPassword(authData.email, authData.password)
         .then((userData) => {
-          commit('login', {
-            uid: userData.user!.uid,
-            email: userData.user!.email,
-          });
-
-          router.push('/dashboard');
-        }, (err) => {
-          console.log(err.message);
+          if (userData.user && userData.user.emailVerified) {
+            commit('signIn', {
+              uid: userData.user.uid,
+              email: userData.user.email,
+            });
+            router.push('/dashboard');
+          } else {
+            console.error('Verify your email');
+          }
+        }).catch((error) => {
+          console.error(error.message);
         });
     },
 
-    logout({ commit }) {
-      commit('logout');
+    signUp({ commit }, authData: AuthData) {
+      firebase.auth().createUserWithEmailAndPassword(authData.email, authData.password)
+        .then(() => {
+          console.log('user registered');
+        }).catch((error) => {
+          console.error(error);
+        });
+
+      firebase.auth().onAuthStateChanged((usr) => {
+        if (usr && !usr.emailVerified) {
+          usr.sendEmailVerification().then(() => {
+            console.log('email sent');
+            router.push('/login');
+          }).catch((error) => {
+            console.error(error);
+          });
+        }
+      });
+    },
+
+    signOut({ commit }) {
+      commit('signOut');
       router.push('/').catch(() => {});
     },
   },

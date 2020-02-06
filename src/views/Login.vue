@@ -52,13 +52,9 @@ import userService from '@/services/user.service';
 export default class Login extends Vue {
   private email: string = '';
   private password: string = '';
-  private user: firebase.User | null = null;
+  private user: firebase.User | null = this.$store.getters.userData;
 
   private routes = [{ target: '/', title: 'Back' }, { target: '/forgot-password', title: 'Forgot password' }]
-
-  async created() {
-    this.user = await userService.getUser();
-  }
 
   updateEmail(value: string) {
     this.email = value;
@@ -83,7 +79,7 @@ export default class Login extends Vue {
   }]
 
   signIn(): void {
-    this.$store.dispatch('login', {
+    this.$store.dispatch('signIn', {
       email: this.email,
       password: this.password,
     });

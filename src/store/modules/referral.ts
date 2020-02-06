@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import { StoreOptions } from 'vuex';
 
 interface ReferralRootState {
-    items: [];
+    items: firebase.firestore.DocumentData;
   }
 
 const referral: StoreOptions<ReferralRootState> = {
@@ -15,9 +15,6 @@ const referral: StoreOptions<ReferralRootState> = {
   },
 
   mutations: {
-    addReferral(state: any, element: {}) {
-      state.items.push(element);
-    },
   },
 
   actions: {
@@ -34,8 +31,31 @@ const referral: StoreOptions<ReferralRootState> = {
           description: data.referral.description,
           createdAt: Date.now(),
         });
+    },
 
-      commit('addReferral', data.referral);
+    editReferral({ commit }:any, data: any) {
+      firebase
+        .firestore()
+        .collection('users')
+        .doc(data.user.uid)
+        .collection('referrals')
+        .doc(data.ref.id)
+        .update({
+          title: data.referral.title,
+          baseUrl: data.referral.baseUrl,
+          referralUrl: data.referral.referralUrl,
+          description: data.referral.description,
+        });
+    },
+
+    deleteReferral({ commit }, data: any) {
+      firebase
+        .firestore()
+        .collection('users')
+        .doc(data.user.uid)
+        .collection('referrals')
+        .doc(data.docId)
+        .delete();
     },
   },
 };

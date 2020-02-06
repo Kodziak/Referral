@@ -84,7 +84,6 @@ import AddReferral from '@/components/modals/AddReferral.vue';
 })
 export default class RefCard extends Vue {
   isModalVisible = false;
-  user = firebase.auth().currentUser;
 
   dateOptions = {
     day: '2-digit',
@@ -93,15 +92,11 @@ export default class RefCard extends Vue {
   };
 
   deleteCard(docId: string): void {
-    if (this.user) {
-      firebase
-        .firestore()
-        .collection('users')
-        .doc(this.user.uid)
-        .collection('referrals')
-        .doc(docId)
-        .delete();
-    }
+    const data = {
+      user: this.$store.getters.userData,
+      docId,
+    };
+    this.$store.dispatch('deleteReferral', data);
   }
 
   showModal() {

@@ -42,9 +42,9 @@
         </button>
         <button
           type="submit"
-          @click.prevent="register"
+          @click.prevent="signUp"
         >
-          Register
+          Sign up
         </button>
       </div>
     </form>
@@ -54,6 +54,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import * as firebase from 'firebase';
+import { AuthData } from '../types/user';
 
 import userService from '@/services/user.service';
 
@@ -63,26 +64,19 @@ export default class Register extends Vue {
   private password: string = '';
   private passwordConfirmation: string = '';
 
-  private user: firebase.User | null = null;
-
-  async created() {
-    this.user = await userService.getUser();
-    if (this.user) {
-      this.$router.push('/dashboard');
-    }
-  }
-
   back(e: Event): void {
     this.$router.push('/');
   }
 
-  register(e: Event): void {
+  signUp(e: Event): void {
     if (this.password === this.passwordConfirmation && this.email !== '' && this.password !== '') {
-      firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) => {
-        this.$router.push('dashboard');
-      }, (err) => {
-        console.log(err);
-      });
+      const data: AuthData = {
+        email: this.email,
+        password: this.password,
+        passwordConfirmation: this.passwordConfirmation,
+      };
+
+      this.$store.dispatch('signUp', data);
     } else {
       console.log('Empty credentials');
     }

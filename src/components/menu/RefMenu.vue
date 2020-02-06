@@ -3,7 +3,7 @@
     <ref-button
       type="button"
       class="btn-menu"
-      title="Open Modal"
+      title="Add referral"
       @click.native="showModal"
     />
     <add-referral

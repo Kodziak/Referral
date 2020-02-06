@@ -3,9 +3,8 @@ import VueClipboard from 'vue-clipboard2';
 import VueCookies from 'vue-cookies';
 import firebase from 'firebase';
 import App from './App.vue';
-import router from './router';
-import store from './store';
-import storageService from '@/services/storage.service';
+import router from '@/router';
+import store from '@/store';
 import './registerServiceWorker';
 
 Vue.config.productionTip = false;
@@ -26,17 +25,6 @@ firebase.analytics();
 
 Vue.use(VueClipboard);
 Vue.use(VueCookies);
-
-if (!storageService.getUserData()) {
-  const userData = JSON.stringify({
-    user: {
-      uid: null,
-      email: null,
-    },
-  });
-  localStorage.setItem('userData', userData);
-}
-
 
 new Vue({
   store,

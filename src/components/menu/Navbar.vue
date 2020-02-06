@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <div
-      v-if="this.$store.getters.userUid"
+      v-if="user.uid"
       class="nav"
     >
       <ref-button
@@ -48,12 +48,8 @@ import userService from '@/services/user.service';
   },
 })
 export default class Navbar extends Vue {
-  user: firebase.User | null = null;
+  user: firebase.User | null = this.$store.getters.userData;
   isModalVisible = false;
-
-  async created() {
-    this.user = await userService.getUser();
-  }
 
   showModal() {
     this.isModalVisible = true;
@@ -64,7 +60,7 @@ export default class Navbar extends Vue {
   }
 
   async signOut(): Promise<void> {
-    this.$store.dispatch('logout');
+    this.$store.dispatch('signOut');
   }
 
   authButtons = [{

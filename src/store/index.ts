@@ -3,23 +3,23 @@ import Vuex, { StoreOptions } from 'vuex';
 import firebase from 'firebase';
 import VuexPersist from 'vuex-persist';
 
+import { UserData } from '@/types/user';
 import user from './modules/user';
 import referral from './modules/referral';
 
 Vue.use(Vuex);
 
 const vuexStorage = new VuexPersist<RootState>({
-  key: 'userData',
+  key: 'appData',
   storage: window.localStorage,
 });
 
-interface RootState {
-  uid: firebase.User | null;
-  email: string | null;
+interface RootState extends UserData {
+  items: [];
 }
 
-const store: StoreOptions<RootState> = {
-
+// const store: StoreOptions<RootState> = {
+const store: any = {
   plugins: [vuexStorage.plugin],
   modules: {
     user,
