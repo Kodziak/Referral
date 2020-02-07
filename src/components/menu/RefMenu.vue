@@ -6,7 +6,7 @@
       title="Add referral"
       @click.native="showModal"
     />
-    <add-referral
+    <referral-modal
       v-show="isModalVisible"
       @close="closeModal"
     />
@@ -17,12 +17,12 @@
 import { Component, Vue } from 'vue-property-decorator';
 import * as firebase from 'firebase';
 import RefButton from '@/components/buttons/RefButton.vue';
-import AddReferral from '@/components/modals/AddReferral.vue';
+import ReferralModal from '@/components/modals/Referral.vue';
 
 @Component({
   components: {
     RefButton,
-    AddReferral,
+    ReferralModal,
   },
 })
 export default class RefMenu extends Vue {

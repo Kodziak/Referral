@@ -19,7 +19,7 @@ const referral: StoreOptions<ReferralRootState> = {
 
   actions: {
     addReferral({ commit }: any, data: any) {
-      const { user, ref } = data;
+      const { user, referral: referralNew } = data;
 
       firebase
         .firestore()
@@ -27,10 +27,10 @@ const referral: StoreOptions<ReferralRootState> = {
         .doc(user.uid)
         .collection('referrals')
         .add({
-          title: ref.title,
-          baseUrl: ref.baseUrl,
-          referralUrl: ref.referralUrl,
-          description: ref.description,
+          title: referralNew.title,
+          baseUrl: referralNew.baseUrl,
+          referralUrl: referralNew.referralUrl,
+          description: referralNew.description,
           createdAt: Date.now(),
         });
     },

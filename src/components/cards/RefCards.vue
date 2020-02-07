@@ -60,6 +60,7 @@ export default class RefCards extends Vue {
 .referrals {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
 }
 

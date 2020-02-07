@@ -4,12 +4,24 @@
       class="ref-label"
       :for="labelId"
     >{{ label }}</label>
-    <input
-      :id="labelId"
-      class="ref-input"
-      :type="type"
-      @input="updateInput"
-    >
+    <div class="ref-actions">
+      <input
+        :id="labelId"
+        class="ref-input"
+        :type="type"
+        :value="value"
+        @input="updateInput"
+      >
+      <button
+        v-if="copy"
+        v-clipboard:copy="value"
+        v-clipboard:success="onCopy"
+        v-clipboard:error="onError"
+        class="btn btn-copy ref-input-copy"
+      >
+        Copy
+      </button>
+    </div>
   </div>
 </template>
 
@@ -23,6 +35,8 @@ import { Component, Vue, Emit } from 'vue-property-decorator';
     type: String,
     labelId: String,
     label: String,
+    value: String,
+    copy: Boolean,
   },
 })
 export default class RefInput extends Vue {
@@ -30,6 +44,17 @@ export default class RefInput extends Vue {
   updateInput(event: any) {
     return event.target.value;
   }
+
+
+// eslint-disable-next-line class-methods-use-this
+onCopy(e: any): void {
+  console.log(`You just copied: ${e.text}`);
+}
+
+// eslint-disable-next-line class-methods-use-this
+onError(e: Event): void {
+  console.log('Failed to copy');
+}
 }
 </script>
 
@@ -40,9 +65,21 @@ export default class RefInput extends Vue {
     margin-right: 20px;
   }
 
-  .ref-input {
-    width: 200px;
-    height: 20px;
+  .ref-actions {
+    .ref-input {
+      width: 200px;
+      height: 20px;
+      border: 1px solid green;
+    }
+
+    .ref-input-copy {
+      vertical-align: top;
+      line-height: 19px;
+      width: 50px;
+      border: 1px solid green;
+      background: green;
+      color: white;
+    }
   }
 }
 </style>

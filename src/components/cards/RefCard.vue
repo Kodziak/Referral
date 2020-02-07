@@ -10,40 +10,27 @@
       {{ referral.title }}
     </h3>
 
+    <ref-label-input
+      id="referral-input"
+      :value="referral.baseUrl"
+      :copy="true"
+      label="Base url"
+      type="text"
+      readonly="readonly"
+    />
 
-    <div class="card-input">
-      <p>Referral url:</p>
-      <input
-        type="text"
-        :value="referral.referralUrl"
-        readonly="readonly"
-      >
-      <button
-        v-clipboard:copy="referral.referralUrl"
-        v-clipboard:success="onCopy"
-        v-clipboard:error="onError"
-        class="btn btn-copy"
-      >
-        Copy to clipboard
-      </button>
-    </div>
+    <ref-label-input
+      id="referral-input"
+      :value="referral.referralUrl"
+      :copy="true"
+      label="Referral url"
+      type="text"
+      readonly="readonly"
+    />
 
-    <div class="card-input">
-      <p>Base url:</p>
-      <input
-        type="text"
-        :value="referral.baseUrl"
-        readonly="readonly"
-      >
-      <button
-        v-clipboard:copy="referral.baseUrl"
-        v-clipboard:success="onCopy"
-        v-clipboard:error="onError"
-        class="btn btn-copy"
-      >
-        Copy to clipboard
-      </button>
-    </div>
+    <p class="created-at">
+      Description: {{ referral.description }}
+    </p>
 
     <ref-button
       type="button"
@@ -51,7 +38,7 @@
       title="Edit"
       @click.native="showModal"
     />
-    <add-referral
+    <referral-modal
       v-show="isModalVisible"
       :referral-val="referral"
       @close="closeModal"
@@ -66,8 +53,10 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import * as firebase from 'firebase';
+
+import RefLabelInput from '@/components/inputs/RefLabelInput.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
-import AddReferral from '@/components/modals/AddReferral.vue';
+import ReferralModal from '@/components/modals/Referral.vue';
 
 @Component({
   name: 'RefCard',
@@ -78,8 +67,9 @@ import AddReferral from '@/components/modals/AddReferral.vue';
     },
   },
   components: {
+    RefLabelInput,
     RefButton,
-    AddReferral,
+    ReferralModal,
   },
 })
 export default class RefCard extends Vue {
@@ -111,15 +101,19 @@ export default class RefCard extends Vue {
     return new Date(timestamp).toLocaleDateString('en-US', this.dateOptions);
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  onCopy(e: any): void {
-    console.log(`You just copied: ${e.text}`);
-  }
 
-  // eslint-disable-next-line class-methods-use-this
-  onError(e: Event): void {
-    console.log('Failed to copy');
-  }
+  private inputs = [{
+
+    id: 'referral-input',
+    label: 'Base url',
+    type: 'text',
+  }, {
+
+    id: 'referral-input',
+    label: 'Referral url',
+    type: 'text',
+
+  }]
 }
 </script>
 
@@ -130,9 +124,8 @@ export default class RefCard extends Vue {
   margin: 20px;
   padding: 10px;
 
-  input {
-    width: 70%;
-    height: 20px;
+  .card-delete {
+    float: right;
   }
 }
 </style>

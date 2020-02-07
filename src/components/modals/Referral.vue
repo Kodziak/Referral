@@ -27,76 +27,34 @@
           class="modal-body"
         >
           <div>
-            <label for="name">Name</label>
-            <div>
-              <input
-                v-if="referralVal"
-                type="text"
-                :value="referralVal.title"
-                required
-                @input="updateTitle"
-              >
-              <input
-                v-else
-                v-model="referral.title"
-                type="text"
-                required
-              >
-            </div>
-          </div>
-          <div>
-            <label for="referral_url">Referral URL</label>
-            <div>
-              <input
-                v-if="referralVal"
-                type="text"
-                :value="referralVal.referralUrl"
-                required
-                @input="updateReferralUrl"
-              >
-              <input
-                v-else
-                v-model="referral.referralUrl"
-                type="text"
-                required
-              >
-            </div>
-          </div>
-          <div>
-            <label for="base_url">Base URL</label>
-            <div>
-              <input
-                v-if="referralVal"
-                type="text"
-                :value="referralVal.baseUrl"
-                required
-                @input="updateBaseUrl"
-              >
-              <input
-                v-else
-                v-model="referral.baseUrl"
-                type="text"
-                required
-              >
-            </div>
-          </div>
-          <div>
-            <label for="description">Description</label>
-            <div>
-              <input
-                v-if="referralVal"
-                type="text"
-                :value="referralVal.description"
-                required
-                @input="updateDescription"
-              >
-              <input
-                v-else
-                v-model="referral.description"
-                type="text"
-                required
-              >
-            </div>
+            <ref-label-input
+              type="text"
+              label-id="ref-input-title"
+              label="Title"
+              :value="(referralVal) ? referralVal.title : referralValNew.title"
+              @value-changed="updateTitle"
+            />
+            <ref-label-input
+              type="text"
+              label-id="ref-input-ref-url"
+              label="Referral Url"
+              :value="(referralVal) ? referralVal.referralUrl : referralValNew.referralUrl"
+              @value-changed="updateReferralUrl"
+            />
+            <ref-label-input
+              type="text"
+              label-id="ref-input-base-url"
+              label="Base Url"
+              :value="(referralVal) ? referralVal.baseUrl : referralValNew.baseUrl"
+              @value-changed="updateBaseUrl"
+            />
+            <ref-label-input
+              type="text"
+              label-id="ref-input-description"
+              label="Description"
+              :value="(referralVal) ? referralVal.description : referralValNew.description"
+              @value-changed="updateDescription"
+            />
           </div>
         </section>
 
@@ -122,6 +80,7 @@
 <script lang="ts">
 import { Component, Vue, Emit } from 'vue-property-decorator';
 import * as firebase from 'firebase';
+
 import RefLabelInput from '@/components/inputs/RefLabelInput.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
 
@@ -147,31 +106,42 @@ export default class RefModal extends Vue {
   };
 
   private referralValNew:
-  {title: string; referralUrl: string; baseUrl: string; description: string} = {
-    title: '',
-    referralUrl: '',
-    baseUrl: '',
-    description: '',
-  };
+    {title: string; referralUrl: string; baseUrl: string; description: string} = {
+      title: '',
+      referralUrl: '',
+      baseUrl: '',
+      description: '',
+    };
 
-  updateTitle(event: any) {
-    this.referralValNew.title = event.target.value;
+  updateTitle(value: any) {
+    this.referral.title = value;
+    this.referralValNew.title = value;
   }
 
-  updateReferralUrl(event: any) {
-    this.referralValNew.referralUrl = event.target.value;
+  updateReferralUrl(value: any) {
+    this.referral.referralUrl = value;
+    this.referralValNew.referralUrl = value;
   }
 
-  updateBaseUrl(event: any) {
-    this.referralValNew.baseUrl = event.target.value;
+  updateBaseUrl(value: any) {
+    this.referral.baseUrl = value;
+    this.referralValNew.baseUrl = value;
   }
 
-  updateDescription(event: any) {
-    this.referralValNew.description = event.target.value;
+  updateDescription(value: any) {
+    this.referral.description = value;
+    this.referralValNew.description = value;
   }
 
   clearInputs():void {
     this.referral = {
+      title: '',
+      referralUrl: '',
+      baseUrl: '',
+      description: '',
+    };
+
+    this.referralValNew = {
       title: '',
       referralUrl: '',
       baseUrl: '',
@@ -185,6 +155,7 @@ export default class RefModal extends Vue {
   }
 
   async addReferral(): Promise<void> {
+    console.log(this.referral);
     if (this.referral.title !== '' && this.referral.baseUrl !== '' && this.referral.referralUrl !== '' && this.referral.description !== '') {
       const data = {
         user: this.$store.getters.userData,
@@ -192,6 +163,7 @@ export default class RefModal extends Vue {
       };
 
       this.$store.dispatch('addReferral', data);
+      this.clearInputs();
       this.close();
     } else {
       console.warn('put data into inputs - add');
@@ -220,7 +192,7 @@ export default class RefModal extends Vue {
       };
 
       this.$store.dispatch('editReferral', data);
-
+      this.clearInputs();
       this.close();
     } else {
       console.warn('put data into inputs - edit');
@@ -289,17 +261,5 @@ export default class RefModal extends Vue {
     font-weight: bold;
     color: #4AAE9B;
     background: transparent;
-  }
-
-  .btn-green {
-    color: white;
-    background: #4AAE9B;
-    border: 1px solid #4AAE9B;
-    border-radius: 2px;
-  }
-
-  input {
-    width: 70%;
-    height: 20px;
   }
 </style>
