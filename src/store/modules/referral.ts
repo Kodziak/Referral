@@ -19,42 +19,46 @@ const referral: StoreOptions<ReferralRootState> = {
 
   actions: {
     addReferral({ commit }: any, data: any) {
+      const { user, ref } = data;
+
       firebase
         .firestore()
         .collection('users')
-        .doc(data.user.uid)
+        .doc(user.uid)
         .collection('referrals')
         .add({
-          title: data.referral.title,
-          baseUrl: data.referral.baseUrl,
-          referralUrl: data.referral.referralUrl,
-          description: data.referral.description,
+          title: ref.title,
+          baseUrl: ref.baseUrl,
+          referralUrl: ref.referralUrl,
+          description: ref.description,
           createdAt: Date.now(),
         });
     },
 
     editReferral({ commit }:any, data: any) {
+      const { user, ref, referral: referralNew } = data;
       firebase
         .firestore()
         .collection('users')
-        .doc(data.user.uid)
+        .doc(user.uid)
         .collection('referrals')
-        .doc(data.ref.id)
+        .doc(ref.id)
         .update({
-          title: data.referral.title,
-          baseUrl: data.referral.baseUrl,
-          referralUrl: data.referral.referralUrl,
-          description: data.referral.description,
+          title: referralNew.title,
+          baseUrl: referralNew.baseUrl,
+          referralUrl: referralNew.referralUrl,
+          description: referralNew.description,
         });
     },
 
     deleteReferral({ commit }, data: any) {
+      const { user, docId } = data;
       firebase
         .firestore()
         .collection('users')
-        .doc(data.user.uid)
+        .doc(user.uid)
         .collection('referrals')
-        .doc(data.docId)
+        .doc(docId)
         .delete();
     },
   },

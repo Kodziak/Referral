@@ -28,7 +28,9 @@ const user: StoreOptions<UserData> = {
 
   actions: {
     signIn({ commit }, authData: AuthData) {
-      firebase.auth().signInWithEmailAndPassword(authData.email, authData.password)
+      const { email, password } = authData;
+
+      firebase.auth().signInWithEmailAndPassword(email, password)
         .then((userData) => {
           if (userData.user && userData.user.emailVerified) {
             commit('signIn', {
@@ -45,7 +47,9 @@ const user: StoreOptions<UserData> = {
     },
 
     signUp({ commit }, authData: AuthData) {
-      firebase.auth().createUserWithEmailAndPassword(authData.email, authData.password)
+      const { email, password } = authData;
+
+      firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(() => {
           console.log('user registered');
         }).catch((error) => {
