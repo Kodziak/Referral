@@ -1,15 +1,23 @@
-name: CI
+on: 
+  pull_request:
+        paths:
+            - '**'
 
-on: [push]
-
+name: Linter
 jobs:
-  build:
-
+  checking:
+    name: Checking code
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v1
-    - name: Run lint
-      run: |
-        yarn install
-        yarn lint
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        with:
+         path: ./node_modules
+         key: vue-node-dependencies-${{ hashFiles('**/yarn.lock') }}
+         restore-keys: |
+          vue-node-dependencies-${{ hashFiles('**/yarn.lock') }}
+          vue-node-dependencies-
+      - run: yarn install
+      - run: yarn lint
