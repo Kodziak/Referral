@@ -1,14 +1,15 @@
 <template>
-  <div class="navbar">
+  <div class="nav-bar">
     <div
       v-if="user.uid"
-      class="nav"
+      class="nav-buttons"
     >
       <ref-button
         v-for="(button, index) in authButtons"
         :key="index"
         :type="button.type"
         :title="button.title"
+        class="nav-button"
         @click.native="button.click"
       />
       <change-password
@@ -18,13 +19,14 @@
     </div>
     <div
       v-else
-      class="nav"
+      class="nav-buttons"
     >
       <route-change
         v-for="(button, index) in buttons"
         :key="index"
         :to="button.target"
         :title="button.title"
+        class="nav-button"
       />
     </div>
   </div>
@@ -84,7 +86,27 @@ export default class Navbar extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.navbar {
-  margin: 20px;
+.nav-bar {
+  width: 100%;
+  min-height: 60px;
+  background: grey;
+
+
+  .nav-buttons {
+    width: 90%;
+    margin: auto;
+    padding: 10px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+    .nav-button {
+      margin: 0 10px;
+      padding: 10px 20px;
+      border: 1px solid black;
+      background: white;
+    }
+
+  }
 }
 </style>

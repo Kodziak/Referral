@@ -45,13 +45,10 @@ export default class RefInput extends Vue {
     return event.target.value;
   }
 
-
-// eslint-disable-next-line class-methods-use-this
 onCopy(e: any): void {
   console.log(`You just copied: ${e.text}`);
 }
 
-// eslint-disable-next-line class-methods-use-this
 onError(e: Event): void {
   console.log('Failed to copy');
 }

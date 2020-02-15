@@ -19,7 +19,7 @@ export default class RouteChange extends Vue {}
 <style lang="scss" scoped>
 .btn-menu {
   all: unset;
-  margin: 10px;
+  display: inline-block;
   padding: 5px 10px;
   border: 0.5px solid grey;
   cursor: pointer;

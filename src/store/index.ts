@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
-import firebase from 'firebase';
 import VuexPersist from 'vuex-persist';
 
 import { UserData } from '@/types/user';

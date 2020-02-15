@@ -1,0 +1,3 @@
+{
+  "*.+(vue|ts|scss|js)": ["eslint --fix", "git add"]
+}
