@@ -1,6 +1,6 @@
 <template>
   <router-link
-    class="btn-menu"
+    class="btn"
     :to="to"
   >
     {{ title }}
@@ -21,12 +21,5 @@ export default class RouteChange extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-.btn-menu {
-  all: unset;
-  display: inline-block;
-  margin: 10px;
-  padding: 5px 10px;
-  border: 0.5px solid grey;
-  cursor: pointer;
-}
+@import './_button.scss';
 </style>

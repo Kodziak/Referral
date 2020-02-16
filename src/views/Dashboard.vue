@@ -30,9 +30,3 @@ export default class Dashboard extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.dashboard {
-}
-
-</style>

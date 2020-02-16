@@ -1,5 +1,5 @@
 <template>
-  <button class="btn-menu">
+  <button class="btn">
     {{ title }}
   </button>
 </template>
@@ -17,11 +17,5 @@ export default class RouteChange extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-.btn-menu {
-  all: unset;
-  display: inline-block;
-  padding: 5px 10px;
-  border: 0.5px solid grey;
-  cursor: pointer;
-}
+@import './_button.scss';
 </style>
