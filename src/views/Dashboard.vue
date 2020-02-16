@@ -9,7 +9,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import firebase from 'firebase';
 
 import RefMenu from '@/components/menu/RefMenu.vue';
 import RefCards from '@/components/cards/RefCards.vue';

@@ -37,14 +37,14 @@
           id="back"
           type="button"
           @click.prevent="back"
-        >
-          Back
+        />
+        Back
         </button>
         <button
           type="submit"
           @click.prevent="signUp"
-        >
-          Sign up
+        />
+        Sign up
         </button>
       </div>
     </form>
@@ -53,10 +53,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import * as firebase from 'firebase';
 import { AuthData } from '../types/user';
-
-import userService from '@/services/user.service';
 
 @Component
 export default class Register extends Vue {

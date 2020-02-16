@@ -14,31 +14,30 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import Navbar from '@/components/menu/Navbar.vue';
-import storageService from '@/services/storage.service';
 
 @Component({
-  components: {
-    Navbar,
-  },
+    components: {
+        Navbar,
+    },
 })
 export default class App extends Vue {
-  created() {
-    if (!(this.$store.getters.userData
+    created() {
+        if (!(this.$store.getters.userData
     && this.$store.getters.userData.uid
     && this.$store.getters.userData.email)) {
-      const appData = JSON.stringify({
-        user: {
-          uid: null,
-          email: null,
-        },
-      });
-      localStorage.setItem('appData', appData);
+            const appData = JSON.stringify({
+                user: {
+                    uid: null,
+                    email: null,
+                },
+            });
+            localStorage.setItem('appData', appData);
+        }
     }
-  }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 body {
   margin: 0;
 }

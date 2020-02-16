@@ -2,23 +2,30 @@ module.exports = {
   root: true,
   env: {
     node: true,
+    browser: true,
   },
   extends: [
-    'plugin:vue/essential',
     '@vue/airbnb',
     '@vue/typescript',
     'plugin:vue/recommended',
+    'plugin:vue/essential',
     'plugin:vue-scoped-css/recommended',
+    'eslint:recommended',
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
+    "indent": "off",
+    "@typescript-eslint/indent": ["error", 2],
     'import/no-unresolved': [
       2,
       { caseSensitive: false },
     ],
   },
+  parser: 'vue-eslint-parser',
   parserOptions: {
     parser: '@typescript-eslint/parser',
   },

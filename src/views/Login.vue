@@ -34,13 +34,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import * as firebase from 'firebase';
 
 import RouteChange from '../components/buttons/RouteChange.vue';
 import RefLabelInput from '@/components/inputs/RefLabelInput.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
-
-import userService from '@/services/user.service';
 
 @Component({
   components: {

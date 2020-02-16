@@ -33,23 +33,22 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import * as firebase from 'firebase';
 
 @Component
-export default class forgotPassword extends Vue {
-      email: string = '';
+export default class ForgotPassword extends Vue {
+  email: string = '';
 
-      back(e: Event): void {
-        this.$router.push('login');
-      }
+  back(e: Event): void {
+    this.$router.push('login');
+  }
 
-      forgotPassword(e: Event): void {
-        this.$store.dispatch('forgotPassword', this.email);
-      }
+  forgotPassword(e: Event): void {
+    this.$store.dispatch('forgotPassword', this.email);
+  }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 input {
   width: 300px;
   height: 40px;
