@@ -91,7 +91,7 @@ export default class ChangePassword extends Vue {
   }]
 
 @Emit('close')
-  close():void {
+  close(): void {
     this.password = '';
     this.repeatPassword = '';
   }

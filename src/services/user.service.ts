@@ -3,7 +3,7 @@
 import * as firebase from 'firebase';
 
 class UserService {
-  async getUser(): Promise<firebase.User | null> {
+  public async getUser(): Promise<firebase.User | null> {
     return firebase.auth().currentUser;
   }
 }

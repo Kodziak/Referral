@@ -17,8 +17,8 @@ const router = new VueRouter({
   ],
 });
 
-router.beforeEach(async (to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+router.beforeEach(async (to: any, from: any, next: any): Promise<any> => {
+  if (to.matched.some((record: any): any => record.meta.requiresAuth)) {
     if (storageService.getUserData()) {
       next();
     } else {

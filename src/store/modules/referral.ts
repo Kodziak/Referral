@@ -2,8 +2,8 @@ import firebase from 'firebase';
 import { StoreOptions } from 'vuex';
 
 interface ReferralRootState {
-    items: firebase.firestore.DocumentData;
-  }
+  items: firebase.firestore.DocumentData;
+}
 
 const referral: StoreOptions<ReferralRootState> = {
   state: {
@@ -35,7 +35,7 @@ const referral: StoreOptions<ReferralRootState> = {
         });
     },
 
-    editReferral({ commit }:any, data: any) {
+    editReferral({ commit }: any, data: any) {
       const { user, ref, referral: referralNew } = data;
       firebase
         .firestore()

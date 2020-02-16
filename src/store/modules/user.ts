@@ -10,7 +10,7 @@ const user: StoreOptions<UserData> = {
   },
 
   getters: {
-    userData: (state:any) => state,
+    userData: (state: any) => state,
     currentUser: () => firebase.auth().currentUser,
   },
 

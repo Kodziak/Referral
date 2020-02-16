@@ -79,7 +79,6 @@
 
 <script lang="ts">
 import { Component, Vue, Emit } from 'vue-property-decorator';
-import * as firebase from 'firebase';
 
 import RefLabelInput from '@/components/inputs/RefLabelInput.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
@@ -106,34 +105,34 @@ export default class RefModal extends Vue {
   };
 
   private referralValNew:
-    {title: string; referralUrl: string; baseUrl: string; description: string} = {
-      title: '',
-      referralUrl: '',
-      baseUrl: '',
-      description: '',
-    };
+  {title: string; referralUrl: string; baseUrl: string; description: string} = {
+    title: '',
+    referralUrl: '',
+    baseUrl: '',
+    description: '',
+  };
 
-  updateTitle(value: any) {
+  updateTitle(value: string): void {
     this.referral.title = value;
     this.referralValNew.title = value;
   }
 
-  updateReferralUrl(value: any) {
+  updateReferralUrl(value: string): void {
     this.referral.referralUrl = value;
     this.referralValNew.referralUrl = value;
   }
 
-  updateBaseUrl(value: any) {
+  updateBaseUrl(value: string): void {
     this.referral.baseUrl = value;
     this.referralValNew.baseUrl = value;
   }
 
-  updateDescription(value: any) {
+  updateDescription(value: string): void {
     this.referral.description = value;
     this.referralValNew.description = value;
   }
 
-  clearInputs():void {
+  clearInputs(): void {
     this.referral = {
       title: '',
       referralUrl: '',
