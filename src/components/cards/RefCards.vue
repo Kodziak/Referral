@@ -4,6 +4,7 @@
       v-for="(referral, index) in referrals"
       :key="index"
       :referral="referral"
+      class="referrals__card"
     />
   </div>
 </template>
@@ -62,6 +63,10 @@ export default class RefCards extends Vue {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+
+  &__card {
+    margin: 30px;
+  }
 }
 
 </style>

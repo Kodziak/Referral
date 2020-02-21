@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import storageService from '../services/storage.service';
+import storage from '@/mixins/storage';
 
 import userRoutes from './routes/user-routes';
 import authRoutes from './routes/auth-routes';
@@ -19,7 +19,7 @@ const router = new VueRouter({
 
 router.beforeEach(async (to: any, from: any, next: any): Promise<any> => {
   if (to.matched.some((record: any): any => record.meta.requiresAuth)) {
-    if (storageService.getUserData()) {
+    if (storage.getData()) {
       next();
     } else {
       next('/login');

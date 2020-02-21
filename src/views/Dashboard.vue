@@ -13,7 +13,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import RefMenu from '@/components/menu/RefMenu.vue';
 import RefCards from '@/components/cards/RefCards.vue';
 
-import userService from '@/services/user.service';
+import { user as userMixin } from '@/mixins/user';
 
 @Component({
   components: {
@@ -25,7 +25,7 @@ export default class Dashboard extends Vue {
   user: firebase.User | null = null;
 
   async created() {
-    this.user = await userService.getUser();
+    this.user = await userMixin.getUser();
   }
 }
 </script>

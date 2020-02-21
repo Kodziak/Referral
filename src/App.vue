@@ -12,6 +12,7 @@
 </template>
 
 <script lang="ts">
+/* eslint-disable vue-scoped-css/require-scoped */
 import { Component, Vue } from 'vue-property-decorator';
 import Navbar from '@/components/menu/Navbar.vue';
 
@@ -37,7 +38,7 @@ export default class App extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 body {
   margin: 0;
 }

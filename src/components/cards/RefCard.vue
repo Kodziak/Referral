@@ -1,40 +1,39 @@
 <template>
   <div class="card">
     <button
-      class="card-delete"
+      class="card__delete-button"
       @click="deleteCard(referral.id)"
     >
       x
     </button>
-    <h3 class="title">
+    <h3 class="card__title">
       {{ referral.title }}
     </h3>
 
     <ref-label-input
-      id="referral-input"
       :value="referral.baseUrl"
       :copy="true"
+      :readonly="true"
       label="Base url"
       type="text"
-      readonly="readonly"
+      class="card__input"
     />
 
     <ref-label-input
-      id="referral-input"
       :value="referral.referralUrl"
       :copy="true"
+      :readonly="true"
       label="Referral url"
       type="text"
-      readonly="readonly"
+      class="card__input"
     />
 
-    <p class="created-at">
+    <p class="card__description">
       Description: {{ referral.description }}
     </p>
 
     <ref-button
       type="button"
-      class="btn-menu"
       title="Edit"
       @click.native="showModal"
     />
@@ -44,14 +43,14 @@
       @close="closeModal"
     />
 
-    <p class="created-at">
-      Created at: <span>{{ changeDate(referral.createdAt) }}</span>
-    </p>
+    <!-- <p class="card__created-at">
+      <span>{{ changeDate(referral.createdAt) }}</span>
+    </p> -->
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 
 import RefLabelInput from '@/components/inputs/RefLabelInput.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
@@ -99,32 +98,34 @@ export default class RefCard extends Vue {
   changeDate(timestamp: number) {
     return new Date(timestamp).toLocaleDateString('en-US', this.dateOptions);
   }
-
-
-  private inputs = [{
-
-    id: 'referral-input',
-    label: 'Base url',
-    type: 'text',
-  }, {
-
-    id: 'referral-input',
-    label: 'Referral url',
-    type: 'text',
-
-  }]
 }
 </script>
 
 <style lang="scss" scoped>
 .card {
   border: 1px solid grey;
-  box-shadow: 1, 1, 0.2, black;
-  margin: 20px;
-  padding: 10px;
+  padding: 20px;
 
-  .card-delete {
+  &__delete-button {
+    background: green;
+    color: white;
     float: right;
+  }
+
+  &__title {
+    margin: 20px 0 10px;
+  }
+
+  &__input {
+    margin: 15px 0;
+  }
+
+  &__description {
+    text-align: left;
+  }
+
+  &__created-at {
+    text-align: center;
   }
 }
 </style>

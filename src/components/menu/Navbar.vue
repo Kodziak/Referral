@@ -40,8 +40,6 @@ import RouteChange from '@/components/buttons/RouteChange.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
 import ChangePassword from '@/components/modals/ChangePassword.vue';
 
-import userService from '@/services/user.service';
-
 @Component({
   components: {
     RouteChange,

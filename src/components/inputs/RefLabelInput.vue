@@ -1,15 +1,16 @@
 <template>
-  <div class="ref-label-input">
+  <div class="ref-input">
     <label
-      class="ref-label"
+      class="ref-input__label"
       :for="labelId"
     >{{ label }}</label>
-    <div class="ref-actions">
+    <div class="ref-input__action">
       <input
         :id="labelId"
-        class="ref-input"
+        class="ref-input__input"
         :type="type"
         :value="value"
+        :readonly="readonly"
         @input="updateInput"
       >
       <button
@@ -17,7 +18,7 @@
         v-clipboard:copy="value"
         v-clipboard:success="onCopy"
         v-clipboard:error="onError"
-        class="btn btn-copy ref-input-copy"
+        class="ref-input__copy"
       >
         Copy
       </button>
@@ -37,11 +38,12 @@ import { Component, Vue, Emit } from 'vue-property-decorator';
     label: String,
     value: String,
     copy: Boolean,
+    readonly: Boolean,
   },
 })
 export default class RefInput extends Vue {
 @Emit('value-changed')
-  updateInput(event: any) {
+  updateInput(event: any): void {
     return event.target.value;
   }
 
@@ -56,27 +58,5 @@ onError(e: Event): void {
 </script>
 
 <style lang="scss" scoped>
-.ref-label-input {
-  .ref-label {
-    color: black;
-    margin-right: 20px;
-  }
-
-  .ref-actions {
-    .ref-input {
-      width: 200px;
-      height: 20px;
-      border: 1px solid green;
-    }
-
-    .ref-input-copy {
-      vertical-align: top;
-      line-height: 19px;
-      width: 50px;
-      border: 1px solid green;
-      background: green;
-      color: white;
-    }
-  }
-}
+@import './_input.scss';
 </style>

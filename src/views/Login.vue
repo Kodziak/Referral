@@ -3,15 +3,59 @@
     <div>
       <h4>Login</h4>
       <form class="login-form">
-        <ref-label-input
-          v-for="(input, index) in inputs"
-          :key="index"
-          v-model="input.vmodel"
-          :label-id="input.id"
-          :label="input.label"
-          :type="input.type"
-          @value-changed="input.func"
-        />
+        <div class="ref-input">
+          <label
+            for="email"
+            class="ref-input__label"
+          >E-Mail</label>
+
+          <input
+            id="email"
+            v-model="form.email"
+            class="ref-input__input"
+            type="email"
+            required
+            @blur="$v.form.email.$touch()"
+            @value-changed="updateEmail"
+          >
+          <div v-if="$v.form.email.$error">
+            <span
+              v-if="!$v.form.email.required"
+              class="form-error"
+            >This field is required</span>
+            <span
+              v-if="!$v.form.email.unique"
+              class="form-error"
+            >This email is taken</span>
+          </div>
+        </div>
+
+        <div class="ref-input">
+          <label
+            for="password"
+            class="ref-input__label"
+          >Password</label>
+
+          <input
+            id="password"
+            v-model="form.password"
+            class="ref-input__input"
+            type="password"
+            required
+            @blur="$v.form.password.$touch()"
+            @value-changed="updatePassword"
+          >
+          <div v-if="$v.form.password.$error">
+            <span
+              v-if="!$v.form.password.required"
+              class="form-error"
+            >This field is required</span>
+            <span
+              v-if="!$v.form.password.minLength"
+              class="form-error"
+            >The password must be at least 8 characters long</span>
+          </div>
+        </div>
       </form>
     </div>
 
@@ -34,41 +78,54 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { required, email } from 'vuelidate/lib/validators';
 
 import RouteChange from '../components/buttons/RouteChange.vue';
-import RefLabelInput from '@/components/inputs/RefLabelInput.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
 
 @Component({
   components: {
-    RefLabelInput,
     RouteChange,
     RefButton,
   },
+  validations: {
+    form: {
+      email: {
+        required,
+        email,
+      },
+      password: {
+        required,
+      },
+    },
+  },
 })
 export default class Login extends Vue {
-  private email: string = '';
-  private password: string = '';
+  private form: {email: null | string; password: null | string} = {
+    email: null,
+    password: null,
+  }
+
   private user: firebase.User | null = this.$store.getters.userData;
 
   private routes = [{ target: '/', title: 'Back' }, { target: '/forgot-password', title: 'Forgot password' }]
 
   updateEmail(value: string) {
-    this.email = value;
+    this.form.email = value;
   }
 
   updatePassword(value: string) {
-    this.password = value;
+    this.form.password = value;
   }
 
   private inputs = [{
-    vmodel: this.email,
+    vmodel: this.form.email,
     id: 'login-email',
     label: 'E-mail',
     type: 'email',
     func: this.updateEmail,
   }, {
-    vmodel: this.password,
+    vmodel: this.form.password,
     id: 'login-password',
     label: 'Password',
     type: 'password',
@@ -76,22 +133,22 @@ export default class Login extends Vue {
   }]
 
   signIn(): void {
-    this.$store.dispatch('signIn', {
-      email: this.email,
-      password: this.password,
-    });
+    this.$store.dispatch('signIn', this.form);
   }
 }
 </script>
 
 <style lang="scss" scoped>
+@import '@/components/inputs/_input.scss';
+
 .login-form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
 }
 
 .buttons {
   margin-top: 30px;
 }
+
 </style>
