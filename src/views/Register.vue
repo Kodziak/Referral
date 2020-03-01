@@ -14,17 +14,12 @@
           class="ref-input__input"
           type="email"
           required
-          @blur="$v.form.email.$touch()"
         >
-        <div v-if="$v.form.email.$error">
-          <span
-            v-if="!$v.form.email.required"
-            class="form-error"
-          >This field is required</span>
-          <span
-            v-if="!$v.form.email.unique"
-            class="form-error"
-          >This email is taken</span>
+        <div
+          v-if="!validation.email"
+          class="validation-email"
+        >
+          <span>E-mail is invalid</span>
         </div>
       </div>
 
@@ -40,17 +35,17 @@
           class="ref-input__input"
           type="password"
           required
-          @blur="$v.form.password.$touch()"
         >
-        <div v-if="$v.form.password.$error">
-          <span
-            v-if="!$v.form.password.required"
-            class="form-error"
-          >This field is required</span>
-          <span
-            v-if="!$v.form.password.minLength"
-            class="form-error"
-          >The password must be at least 8 characters long</span>
+        <div
+          class="validation-password"
+        >
+          <span v-if="!validation.password.length">Password is too short.</span>
+          <span v-if="!validation.password.lowercase">Password not contain lowercase.</span>
+          <span v-if="!validation.password.uppercase">Password not contain uppercase.</span>
+          <span v-if="!validation.password.number">Password not contain number.</span>
+          <span v-if="!validation.password.specialCharacter">
+            Password not contain special character.
+          </span>
         </div>
       </div>
 
@@ -66,17 +61,9 @@
           class="ref-input__input"
           type="password"
           required
-          @blur="$v.form.passwordConfirmation.$touch()"
         >
-        <div v-if="$v.form.passwordConfirmation.$error">
-          <span
-            v-if="!$v.form.passwordConfirmation.required"
-            class="form-error"
-          >This field is required</span>
-          <span
-            v-if="!$v.form.passwordConfirmation.sameAsPassword"
-            class="form-error"
-          >Password confirmation must be the same as password!</span>
+        <div>
+          <span v-if="!validation.passwordConfirmation">Passwords are not equal</span>
         </div>
       </div>
     </form>
@@ -97,10 +84,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import {
-  required, email, minLength, sameAs,
-} from 'vuelidate/lib/validators';
+/* eslint-disable class-methods-use-this */
+import { Component, Vue, Watch } from 'vue-property-decorator';
+
+import { AuthData } from '@/types/user';
 
 import RouteChange from '../components/buttons/RouteChange.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
@@ -110,53 +97,86 @@ import RefButton from '@/components/buttons/RefButton.vue';
     RouteChange,
     RefButton,
   },
-  validations: {
-    form: {
-      email: {
-        required,
-        email,
-      },
-      password: {
-        required,
-        minLength: minLength(6),
-      },
-      passwordConfirmation: {
-        required,
-        sameAsPassword: sameAs('password'),
-      },
-    },
-  },
 })
 export default class Register extends Vue {
-  private form:
-  {email: null | string; password: null | string; passwordConfirmation: null | string} = {
-    email: null,
-    password: null,
-    passwordConfirmation: null,
+  private form: AuthData = {
+    email: '',
+    password: '',
+    passwordConfirmation: '',
   }
 
-  signUp(): void {
-    this.$v.form.$touch();
-    if (this.$v.form.$invalid) {
-      console.log('invalid');
-      return;
-    }
+  private validation: any = {
+    email: true,
+    password: {
+      length: true,
+      lowercase: true,
+      uppercase: true,
+      number: true,
+      specialCharacter: true,
+    },
+    passwordConfirmation: true,
+  }
 
-    this.$store.dispatch('signUp', this.form);
+  // @Watch('form.email')
+  validateEmail(value: string) {
+    // eslint-disable-next-line no-useless-escape
+    const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const result = EMAIL_REGEX.test(String(value).toLowerCase());
+
+    this.validation.email = result;
+    return result;
+  }
+
+  // @Watch('form.password')
+  validatePassword(value: string) {
+    const REGEX_PASSWORD_LENGTH = /(?=.{8,})/;
+    const REGEX_PASSWORD_LOWERCASE = /(?=.*[a-z])/;
+    const REGEX_PASSWORD_UPPERCASE = /(?=.*[A-Z])/;
+    const REGEX_PASSWORD_NUMBER = /(?=.*[0-9])/;
+    const REGEX_PASSWORD_SPECIAL_CHARACTER = /(?=.*[!@#$%^&*])/;
+
+    this.validation.password.length = REGEX_PASSWORD_LENGTH.test(value);
+    this.validation.password.lowercase = REGEX_PASSWORD_LOWERCASE.test(value);
+    this.validation.password.uppercase = REGEX_PASSWORD_UPPERCASE.test(value);
+    this.validation.password.number = REGEX_PASSWORD_NUMBER.test(value);
+    this.validation.password.specialCharacter = REGEX_PASSWORD_SPECIAL_CHARACTER.test(value);
+
+    if (REGEX_PASSWORD_LENGTH.test(value)
+    && REGEX_PASSWORD_LOWERCASE.test(value)
+    && REGEX_PASSWORD_UPPERCASE.test(value)
+    && REGEX_PASSWORD_NUMBER.test(value)
+    && REGEX_PASSWORD_SPECIAL_CHARACTER.test(value)) {
+      return true;
+    }
+    return false;
+  }
+
+  // @Watch('form.passwordConfirmation')
+  validatePasswordConfirmation(value: string) {
+    if (this.form.password === value) {
+      this.validation.passwordConfirmation = true;
+      return true;
+    }
+    this.validation.passwordConfirmation = false;
+    return false;
+  }
+
+
+  signUp(): void {
+    const validationEmail = this.validateEmail(this.form.email);
+    const validationPassword = this.validatePassword(this.form.password);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const validationPassConf = this.validatePasswordConfirmation(this.form.passwordConfirmation!);
+
+    if (validationPassConf && validationEmail && validationPassword) {
+      this.$store.dispatch('signUp', this.form);
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
 @import '@/components/inputs/_input.scss';
-
-.form-error {
-  margin: 5px 0;
-  padding: 3px;
-  background: red;
-  border-radius: 5px;
-}
-
 .register-form {
   display: flex;
   flex-direction: column;
@@ -165,5 +185,10 @@ export default class Register extends Vue {
 
 .buttons {
   margin-top: 30px;
+}
+
+.validation-password {
+  display: flex;
+  flex-direction: column;
 }
 </style>

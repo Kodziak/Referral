@@ -13,7 +13,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import RefMenu from '@/components/menu/RefMenu.vue';
 import RefCards from '@/components/cards/RefCards.vue';
 
-import { user as userMixin } from '@/mixins/user';
+import userMixin from '@/mixins/user';
 
 @Component({
   components: {

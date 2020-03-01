@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import VueClipboard from 'vue-clipboard2';
 import VueCookies from 'vue-cookies';
-import Vuelidate from 'vuelidate';
 import firebase from 'firebase';
 import App from './App.vue';
 import router from '@/router';
@@ -26,7 +25,6 @@ firebase.analytics();
 
 Vue.use(VueClipboard);
 Vue.use(VueCookies);
-Vue.use(Vuelidate);
 
 new Vue({
   store,

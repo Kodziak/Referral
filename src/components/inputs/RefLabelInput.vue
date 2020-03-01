@@ -51,8 +51,8 @@ onCopy(e: any): void {
   console.log(`You just copied: ${e.text}`);
 }
 
-onError(e: Event): void {
-  console.log('Failed to copy');
+onError(): void {
+  throw new Error('Failed to copy text.');
 }
 }
 </script>

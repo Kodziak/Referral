@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 export default {
   getData(): any {
     let appData: any = localStorage.getItem('appData');

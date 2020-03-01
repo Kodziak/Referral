@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import { StoreOptions } from 'vuex';
+
 import { AuthData, UserData } from '@/types/user';
 import router from '@/router';
 
@@ -10,28 +11,28 @@ const user: StoreOptions<UserData> = {
   },
 
   getters: {
-    userData: (state: any) => state,
-    currentUser: () => firebase.auth().currentUser,
+    userData: (state: UserData): UserData => state,
+    currentUser: (): firebase.User | null => firebase.auth().currentUser,
   },
 
   mutations: {
-    signIn(state: any, userData: UserData) {
+    signIn(state: UserData, userData: UserData): void {
       state.uid = userData.uid;
       state.email = userData.email;
     },
 
-    signOut(state: any) {
+    signOut(state: UserData): void {
       state.uid = null;
       state.email = null;
     },
   },
 
   actions: {
-    signIn({ commit }, authData: AuthData) {
+    signIn({ commit }, authData: AuthData): void {
       const { email, password } = authData;
 
       firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((userData) => {
+        .then((userData): void => {
           if (userData.user && userData.user.emailVerified) {
             commit('signIn', {
               uid: userData.user.uid,
@@ -41,52 +42,52 @@ const user: StoreOptions<UserData> = {
           } else {
             console.error('Verify your email');
           }
-        }).catch((error) => {
+        }).catch((error: Error): void => {
           console.error(error.message);
         });
     },
 
-    signUp({ commit }, authData: AuthData) {
+    signUp({ commit }, authData: AuthData): void {
       const { email, password } = authData;
 
       firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(() => {
+        .then((): void => {
           console.log('user registered');
-        }).catch((error) => {
+        }).catch((error: Error): void => {
           console.error(error);
         });
 
-      firebase.auth().onAuthStateChanged((usr) => {
+      firebase.auth().onAuthStateChanged((usr): void => {
         if (usr && !usr.emailVerified) {
-          usr.sendEmailVerification().then(() => {
+          usr.sendEmailVerification().then((): void => {
             console.log('email sent');
             router.push('/login');
-          }).catch((error) => {
+          }).catch((error: Error): void => {
             console.error(error);
           });
         }
       });
     },
 
-    signOut({ commit }) {
+    signOut({ commit }): void {
       commit('signOut');
-      router.push('/').catch(() => {});
+      router.push('/').catch((): void => {});
     },
 
-    changePassword({ commit }, password) {
+    changePassword({ commit }, password): void {
       if (this.getters.currentUser) {
-        this.getters.currentUser.updatePassword(password).then(() => {
+        this.getters.currentUser.updatePassword(password).then((): void => {
           console.log('Updated succesfull');
-        }).catch((err: any) => {
+        }).catch((err: Error): void => {
           console.log(err);
         });
       }
     },
 
-    forgotPassword({ commit }, email) {
-      firebase.auth().sendPasswordResetEmail(email).then(() => {
+    forgotPassword({ commit }, email): void {
+      firebase.auth().sendPasswordResetEmail(email).then((): void => {
         router.push('/');
-      }).catch((error) => {
+      }).catch((error: Error): void => {
         console.error(error);
       });
     },

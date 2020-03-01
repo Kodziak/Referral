@@ -18,7 +18,7 @@ const referral: StoreOptions<ReferralRootState> = {
   },
 
   actions: {
-    addReferral({ commit }: any, data: any) {
+    addReferral({ commit }: any, data: any): any {
       const { user, referral: referralNew } = data;
 
       firebase
@@ -35,7 +35,7 @@ const referral: StoreOptions<ReferralRootState> = {
         });
     },
 
-    editReferral({ commit }: any, data: any) {
+    editReferral({ commit }: any, data: any): any {
       const { user, ref, referral: referralNew } = data;
       firebase
         .firestore()
@@ -51,7 +51,7 @@ const referral: StoreOptions<ReferralRootState> = {
         });
     },
 
-    deleteReferral({ commit }, data: any) {
+    deleteReferral({ commit }, data: any): any {
       const { user, docId } = data;
       firebase
         .firestore()

@@ -15,19 +15,8 @@
             class="ref-input__input"
             type="email"
             required
-            @blur="$v.form.email.$touch()"
             @value-changed="updateEmail"
           >
-          <div v-if="$v.form.email.$error">
-            <span
-              v-if="!$v.form.email.required"
-              class="form-error"
-            >This field is required</span>
-            <span
-              v-if="!$v.form.email.unique"
-              class="form-error"
-            >This email is taken</span>
-          </div>
         </div>
 
         <div class="ref-input">
@@ -42,19 +31,8 @@
             class="ref-input__input"
             type="password"
             required
-            @blur="$v.form.password.$touch()"
             @value-changed="updatePassword"
           >
-          <div v-if="$v.form.password.$error">
-            <span
-              v-if="!$v.form.password.required"
-              class="form-error"
-            >This field is required</span>
-            <span
-              v-if="!$v.form.password.minLength"
-              class="form-error"
-            >The password must be at least 8 characters long</span>
-          </div>
         </div>
       </form>
     </div>
@@ -78,7 +56,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { required, email } from 'vuelidate/lib/validators';
 
 import RouteChange from '../components/buttons/RouteChange.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
@@ -87,17 +64,6 @@ import RefButton from '@/components/buttons/RefButton.vue';
   components: {
     RouteChange,
     RefButton,
-  },
-  validations: {
-    form: {
-      email: {
-        required,
-        email,
-      },
-      password: {
-        required,
-      },
-    },
   },
 })
 export default class Login extends Vue {
