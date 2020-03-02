@@ -26,6 +26,9 @@ module.exports = {
       2,
       { caseSensitive: false },
     ],
+    'max-len': ['error', {
+      'code': 150
+    }]
   },
   parser: 'vue-eslint-parser',
   parserOptions: {

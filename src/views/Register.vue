@@ -88,6 +88,7 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 
 import { AuthData } from '@/types/user';
+import Regex from '@/constants/Regex';
 
 import RouteChange from '../components/buttons/RouteChange.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
@@ -105,7 +106,7 @@ export default class Register extends Vue {
     passwordConfirmation: '',
   }
 
-  private validation: any = {
+  private validation = {
     email: true,
     password: {
       length: true,
@@ -117,41 +118,42 @@ export default class Register extends Vue {
     passwordConfirmation: true,
   }
 
-  // @Watch('form.email')
+  @Watch('form.email')
   validateEmail(value: string) {
-    // eslint-disable-next-line no-useless-escape
-    const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const result = EMAIL_REGEX.test(String(value).toLowerCase());
+    let result;
 
-    this.validation.email = result;
+    if (value.length > 5) {
+      result = Regex.REGEX_EMAIL.test(String(value).toLowerCase());
+      this.validation.email = result;
+    }
+
     return result;
   }
 
-  // @Watch('form.password')
+  @Watch('form.password')
   validatePassword(value: string) {
-    const REGEX_PASSWORD_LENGTH = /(?=.{8,})/;
-    const REGEX_PASSWORD_LOWERCASE = /(?=.*[a-z])/;
-    const REGEX_PASSWORD_UPPERCASE = /(?=.*[A-Z])/;
-    const REGEX_PASSWORD_NUMBER = /(?=.*[0-9])/;
-    const REGEX_PASSWORD_SPECIAL_CHARACTER = /(?=.*[!@#$%^&*])/;
+    const passwordLength = Regex.REGEX_PASSWORD_LENGTH.test(value);
+    const passwordLowerCase = Regex.REGEX_PASSWORD_LOWERCASE.test(value);
+    const passwordUpperCase = Regex.REGEX_PASSWORD_UPPERCASE.test(value);
+    const passwordNumber = Regex.REGEX_PASSWORD_NUMBER.test(value);
+    const passwordSpecial = Regex.REGEX_PASSWORD_SPECIAL_CHARACTER.test(value);
 
-    this.validation.password.length = REGEX_PASSWORD_LENGTH.test(value);
-    this.validation.password.lowercase = REGEX_PASSWORD_LOWERCASE.test(value);
-    this.validation.password.uppercase = REGEX_PASSWORD_UPPERCASE.test(value);
-    this.validation.password.number = REGEX_PASSWORD_NUMBER.test(value);
-    this.validation.password.specialCharacter = REGEX_PASSWORD_SPECIAL_CHARACTER.test(value);
+    if (value.length > 5) {
+      this.validation.password.length = passwordLength;
+      this.validation.password.lowercase = passwordLowerCase;
+      this.validation.password.uppercase = passwordUpperCase;
+      this.validation.password.number = passwordNumber;
+      this.validation.password.specialCharacter = passwordSpecial;
+    }
 
-    if (REGEX_PASSWORD_LENGTH.test(value)
-    && REGEX_PASSWORD_LOWERCASE.test(value)
-    && REGEX_PASSWORD_UPPERCASE.test(value)
-    && REGEX_PASSWORD_NUMBER.test(value)
-    && REGEX_PASSWORD_SPECIAL_CHARACTER.test(value)) {
+    if (passwordLength && passwordLowerCase && passwordUpperCase && passwordNumber && passwordSpecial) {
       return true;
     }
+
     return false;
   }
 
-  // @Watch('form.passwordConfirmation')
+  @Watch('form.passwordConfirmation')
   validatePasswordConfirmation(value: string) {
     if (this.form.password === value) {
       this.validation.passwordConfirmation = true;
