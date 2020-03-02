@@ -13,7 +13,7 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    
+
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -27,8 +27,8 @@ module.exports = {
       { caseSensitive: false },
     ],
     'max-len': ['error', {
-      'code': 150
-    }]
+      code: 150,
+    }],
   },
   parser: 'vue-eslint-parser',
   parserOptions: {

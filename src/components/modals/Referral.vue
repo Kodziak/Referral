@@ -183,7 +183,10 @@ export default class RefModal extends Vue {
       this.referralValNew.description = ref.description;
     }
 
-    if (this.referralValNew.title !== '' && this.referralValNew.baseUrl !== '' && this.referralValNew.referralUrl !== '' && this.referralValNew.description !== '') {
+    if (this.referralValNew.title !== ''
+      && this.referralValNew.baseUrl !== ''
+      && this.referralValNew.referralUrl !== ''
+      && this.referralValNew.description !== '') {
       const data = {
         user: this.$store.getters.userData,
         ref,
