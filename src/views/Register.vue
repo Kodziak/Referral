@@ -84,7 +84,6 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable class-methods-use-this */
 import { Component, Vue, Watch } from 'vue-property-decorator';
 
 import { AuthData } from '@/types/user';
@@ -118,27 +117,30 @@ export default class Register extends Vue {
     passwordConfirmation: true,
   }
 
+  private showValidations = false;
+
   @Watch('form.email')
   validateEmail(value: string) {
     let result;
 
-    if (value.length > 5) {
+    if (value.length > 5 || this.showValidations) {
       result = Regex.REGEX_EMAIL.test(String(value).toLowerCase());
       this.validation.email = result;
+      return result;
     }
 
-    return result;
+    return false;
   }
 
   @Watch('form.password')
-  validatePassword(value: string) {
+  validatePassword(value: string): boolean {
     const passwordLength = Regex.REGEX_PASSWORD_LENGTH.test(value);
     const passwordLowerCase = Regex.REGEX_PASSWORD_LOWERCASE.test(value);
     const passwordUpperCase = Regex.REGEX_PASSWORD_UPPERCASE.test(value);
     const passwordNumber = Regex.REGEX_PASSWORD_NUMBER.test(value);
     const passwordSpecial = Regex.REGEX_PASSWORD_SPECIAL_CHARACTER.test(value);
 
-    if (value.length > 5) {
+    if (value.length > 5 || this.showValidations) {
       this.validation.password.length = passwordLength;
       this.validation.password.lowercase = passwordLowerCase;
       this.validation.password.uppercase = passwordUpperCase;
@@ -154,8 +156,8 @@ export default class Register extends Vue {
   }
 
   @Watch('form.passwordConfirmation')
-  validatePasswordConfirmation(value: string) {
-    if (this.form.password === value) {
+  validatePasswordConfirmation(value: string): boolean {
+    if (this.form.password === value || this.showValidations) {
       this.validation.passwordConfirmation = true;
       return true;
     }
@@ -163,15 +165,21 @@ export default class Register extends Vue {
     return false;
   }
 
-
-  signUp(): void {
+  isEverythingValidated(): boolean {
     const validationEmail = this.validateEmail(this.form.email);
     const validationPassword = this.validatePassword(this.form.password);
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const validationPassConf = this.validatePasswordConfirmation(this.form.passwordConfirmation!);
 
-    if (validationPassConf && validationEmail && validationPassword) {
+    return (validationEmail && validationPassword && validationPassConf);
+  }
+
+
+  signUp(): void {
+    if (this.isEverythingValidated()) {
       this.$store.dispatch('signUp', this.form);
+    } else {
+      this.showValidations = true;
     }
   }
 }
