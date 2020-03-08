@@ -57,8 +57,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-import RouteChange from '../components/buttons/RouteChange.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
+import RouteChange from '../components/buttons/RouteChange.vue';
 
 @Component({
   components: {

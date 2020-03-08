@@ -89,8 +89,8 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import { AuthData } from '@/types/user';
 import Regex from '@/constants/Regex';
 
-import RouteChange from '../components/buttons/RouteChange.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
+import RouteChange from '../components/buttons/RouteChange.vue';
 
 @Component({
   components: {
