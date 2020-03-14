@@ -49,13 +49,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Emit } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
+
+import { EventBus } from '@/utils/eventBus';
 
 import BaseModal from '@/components/modals/BaseModal.vue';
 import RefLabelInput from '@/components/inputs/RefLabelInput.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
-
-import { EventBus } from '../../utils/eventBus';
 
 @Component({
   name: 'RefModal',

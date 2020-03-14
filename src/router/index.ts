@@ -1,11 +1,15 @@
 import Vue from 'vue';
-import VueRouter from 'vue-router';
+import VueRouter, {
+  Route, RouteRecord, RawLocation,
+} from 'vue-router';
 import NProgress from 'nprogress';
-import storage from '@/mixins/storage';
 
 import userRoutes from './routes/user-routes';
 import authRoutes from './routes/auth-routes';
 import infoRoutes from './routes/info-routes';
+
+import storage from '@/mixins/storage';
+
 
 Vue.use(VueRouter);
 
@@ -18,9 +22,9 @@ const router = new VueRouter({
   ],
 });
 
-router.beforeEach((to: any, from: any, next: any): void => {
+router.beforeEach((to: Route, from: Route, next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void): void => {
   NProgress.start();
-  if (to.matched.some((record: any): void => record.meta.requiresAuth)) {
+  if (to.matched.some((record: RouteRecord): void => record.meta.requiresAuth)) {
     if (storage.getData()) {
       next();
     } else {
@@ -31,8 +35,10 @@ router.beforeEach((to: any, from: any, next: any): void => {
   }
 });
 
-router.afterEach((): void => {
-  NProgress.done();
+router.afterEach((to: Route, from: Route): void => {
+  if (!(to.matched.some((record: RouteRecord): void => record.meta.requiresAuth))) {
+    NProgress.done();
+  }
 });
 
 export default router;

@@ -18,8 +18,8 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
-    indent: 'off',
-    // "import/order": ["error", {"groups": ["index", "sibling", "parent", "internal", "external", "builtin"]}],
+    "indent": ["error", 2],
+    "import/order": ["warn", {"groups": ["builtin", "external", "parent", "sibling", "index"]}],
     '@typescript-eslint/indent': ['error', 2],
     'vue/no-parsing-error': [2, { 'x-invalid-end-tag': false }],
     'import/no-unresolved': [
@@ -45,4 +45,12 @@ module.exports = {
       },
     },
   ],
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        paths: ['./src']
+      }
+    }
+  },
 };

@@ -39,8 +39,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+
+import { EventBus } from '@/utils/eventBus';
+
 import RefButton from '@/components/buttons/RefButton.vue';
-import { EventBus } from '../../utils/eventBus';
 
 @Component({
   name: 'BaseModal',

@@ -22,14 +22,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Emit } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import * as firebase from 'firebase';
+
+import { EventBus } from '@/utils/eventBus';
 
 import BaseModal from '@/components/modals/BaseModal.vue';
 import RefLabelInput from '@/components/inputs/RefLabelInput.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
 
-import { EventBus } from '../../utils/eventBus';
 
 @Component({
   name: 'ChangePassword',
@@ -71,7 +72,7 @@ export default class ChangePassword extends Vue {
     EventBus.$emit('closeModal', true);
   }
 
-  changePassword(e: Event): void {
+  changePassword(): void {
     const user = firebase.auth().currentUser;
     if (user && this.password !== '' && this.password === this.repeatPassword) {
       this.$store.dispatch('changePassword', this.password);

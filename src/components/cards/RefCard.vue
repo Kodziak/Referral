@@ -52,11 +52,11 @@
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
 
+import { EventBus } from '@/utils/eventBus';
+
 import RefLabelInput from '@/components/inputs/RefLabelInput.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
 import ReferralModal from '@/components/modals/Referral.vue';
-
-import { EventBus } from '../../utils/eventBus';
 
 @Component({
   name: 'RefCard',

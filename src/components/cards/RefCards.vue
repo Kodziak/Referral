@@ -11,7 +11,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import * as NProgress from 'nprogress';
 import * as firebase from 'firebase';
+
 import RefCard from './RefCard.vue';
 
 @Component({
@@ -27,11 +29,12 @@ export default class RefCards extends Vue {
     this.getUser();
   }
 
-  async getUser() {
+  async getUser(): Promise<void> {
     await firebase.auth().onAuthStateChanged(async (usr) => {
       if (usr) {
         this.user = usr;
         await this.getReferrals();
+        NProgress.done();
       }
     });
   }
