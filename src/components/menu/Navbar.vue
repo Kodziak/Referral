@@ -33,12 +33,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import * as firebase from 'firebase';
 
 import RouteChange from '@/components/buttons/RouteChange.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
 import ChangePassword from '@/components/modals/ChangePassword.vue';
+
+import { EventBus } from '../../utils/eventBus';
 
 @Component({
   components: {
@@ -55,8 +57,11 @@ export default class Navbar extends Vue {
     this.isModalVisible = true;
   }
 
+  @Watch('isModalVisible')
   closeModal() {
-    this.isModalVisible = false;
+    EventBus.$on('closeModal', () => {
+      this.isModalVisible = false;
+    });
   }
 
   async signOut(): Promise<void> {

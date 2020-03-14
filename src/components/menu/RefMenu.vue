@@ -14,10 +14,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import * as firebase from 'firebase';
+
 import RefButton from '@/components/buttons/RefButton.vue';
 import ReferralModal from '@/components/modals/Referral.vue';
+
+import { EventBus } from '../../utils/eventBus';
 
 @Component({
   components: {
@@ -46,8 +49,11 @@ export default class RefMenu extends Vue {
     this.isModalVisible = true;
   }
 
+  @Watch('isModalVisible')
   closeModal() {
-    this.isModalVisible = false;
+    EventBus.$on('closeModal', () => {
+      this.isModalVisible = false;
+    });
   }
 }
 </script>

@@ -5,6 +5,7 @@ import firebase from 'firebase';
 import store from '@/store';
 import router from '@/router';
 import './registerServiceWorker';
+import 'nprogress/nprogress.css';
 import App from './App.vue';
 
 Vue.config.productionTip = false;

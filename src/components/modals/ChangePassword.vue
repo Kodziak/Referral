@@ -1,65 +1,40 @@
 <template>
-  <transition name="modal-fade">
-    <div class="modal-backdrop">
-      <div
-        class="modal"
-        role="dialog"
-        aria-labelledby="modalTitle"
-        aria-describedby="modalDescription"
-      >
-        <header
-          id="modalTitle"
-          class="modal-header"
-        >
-          Change password
-          <button
-            type="button"
-            class="btn-close"
-            aria-label="Close modal"
-            @click.prevent="close"
-          >
-            x
-          </button>
-        </header>
+  <base-modal :props="modalAttributes">
+    <form slot="body">
+      <ref-label-input
+        v-for="(input, index) in inputs"
+        :key="index"
+        v-model="input.vmodel"
+        :label-id="input.id"
+        :label="input.label"
+        :type="input.type"
+        @value-changed="input.func"
+      />
+    </form>
 
-        <section
-          id="modalDescription"
-          class="modal-body"
-        >
-          <form>
-            <ref-label-input
-              v-for="(input, index) in inputs"
-              :key="index"
-              v-model="input.vmodel"
-              :label-id="input.id"
-              :label="input.label"
-              :type="input.type"
-              @value-changed="input.func"
-            />
-          </form>
-        </section>
-
-        <footer class="modal-footer">
-          <ref-button
-            type="submit"
-            title="Change"
-            @click="changePassword"
-          />
-        </footer>
-      </div>
-    </div>
-  </transition>
+    <ref-button
+      slot="footer"
+      type="submit"
+      title="Change"
+      @click="changePassword"
+    />
+  </base-modal>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Emit } from 'vue-property-decorator';
 import * as firebase from 'firebase';
+
+import BaseModal from '@/components/modals/BaseModal.vue';
 import RefLabelInput from '@/components/inputs/RefLabelInput.vue';
 import RefButton from '@/components/buttons/RefButton.vue';
+
+import { EventBus } from '../../utils/eventBus';
 
 @Component({
   name: 'ChangePassword',
   components: {
+    BaseModal,
     RefLabelInput,
     RefButton,
   },
@@ -90,19 +65,23 @@ export default class ChangePassword extends Vue {
     func: this.updateRepeatPassword,
   }]
 
-@Emit('close')
   close(): void {
     this.password = '';
     this.repeatPassword = '';
+    EventBus.$emit('closeModal', true);
   }
 
-changePassword(e: Event): void {
-  const user = firebase.auth().currentUser;
-  if (user && this.password !== '' && this.password === this.repeatPassword) {
-    this.$store.dispatch('changePassword', this.password);
-    this.close();
+  changePassword(e: Event): void {
+    const user = firebase.auth().currentUser;
+    if (user && this.password !== '' && this.password === this.repeatPassword) {
+      this.$store.dispatch('changePassword', this.password);
+      this.close();
+    }
   }
-}
+
+  private modalAttributes = {
+    title: 'Change Password',
+  }
 }
 </script>
 

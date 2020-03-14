@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import NProgress from 'nprogress';
 import storage from '@/mixins/storage';
 
 import userRoutes from './routes/user-routes';
@@ -17,8 +18,9 @@ const router = new VueRouter({
   ],
 });
 
-router.beforeEach(async (to: any, from: any, next: any): Promise<any> => {
-  if (to.matched.some((record: any): any => record.meta.requiresAuth)) {
+router.beforeEach((to: any, from: any, next: any): void => {
+  NProgress.start();
+  if (to.matched.some((record: any): void => record.meta.requiresAuth)) {
     if (storage.getData()) {
       next();
     } else {
@@ -27,6 +29,10 @@ router.beforeEach(async (to: any, from: any, next: any): Promise<any> => {
   } else {
     next();
   }
+});
+
+router.afterEach((): void => {
+  NProgress.done();
 });
 
 export default router;
