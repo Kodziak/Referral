@@ -31,20 +31,13 @@
       />
     </div>
 
-    <ref-button
-      v-if="referralVal"
+    <base-button
       slot="footer"
       type="submit"
-      title="Update"
-      @click.native="updateReferral(referralVal)"
-    />
-    <ref-button
-      v-else
-      slot="footer"
-      type="submit"
-      title="Add Referral"
-      @click.native="addReferral"
-    />
+      @click.native="referralVal ? updateReferral(referralVal) : addReferral"
+    >
+      {{ referralVal ? 'Update' : 'Add Referral' }}
+    </base-button>
   </base-modal>
 </template>
 
@@ -52,17 +45,18 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 import { EventBus } from '@/utils/eventBus';
+import { Referral } from '@/types/';
 
 import BaseModal from '@/components/modals/BaseModal.vue';
 import RefLabelInput from '@/components/inputs/RefLabelInput.vue';
-import RefButton from '@/components/buttons/RefButton.vue';
+import BaseButton from '@/components/buttons/BaseButton.vue';
 
 @Component({
   name: 'RefModal',
   components: {
     BaseModal,
     RefLabelInput,
-    RefButton,
+    BaseButton,
   },
   props: {
     referralVal: {
@@ -72,15 +66,14 @@ import RefButton from '@/components/buttons/RefButton.vue';
   },
 })
 export default class RefModal extends Vue {
-  private referral: {title: string; referralUrl: string; baseUrl: string; description: string} = {
+  private referral: Referral = {
     title: '',
     referralUrl: '',
     baseUrl: '',
     description: '',
   };
 
-  private referralValNew:
-  {title: string; referralUrl: string; baseUrl: string; description: string} = {
+  private referralValNew: Referral= {
     title: '',
     referralUrl: '',
     baseUrl: '',

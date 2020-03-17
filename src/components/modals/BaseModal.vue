@@ -42,12 +42,12 @@ import { Component, Vue } from 'vue-property-decorator';
 
 import { EventBus } from '@/utils/eventBus';
 
-import RefButton from '@/components/buttons/RefButton.vue';
+import BaseButton from '@/components/buttons/BaseButton.vue';
 
 @Component({
   name: 'BaseModal',
   components: {
-    RefButton,
+    BaseButton,
   },
   props: {
     props: {

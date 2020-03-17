@@ -69,16 +69,15 @@
     </form>
 
     <div class="buttons">
-      <route-change
-        title="Back"
-        to="/"
-      />
-      <ref-button
-        class="btn-menu"
-        type="submit"
-        title="Register"
-        @click.native="signUp"
-      />
+      <base-button
+        v-for="(button, key) in buttons"
+        :key="key"
+        :to="button.to"
+
+        @click.native="button.click ? button.click() : null"
+      >
+        {{ button.title }}
+      </base-button>
     </div>
   </div>
 </template>
@@ -89,13 +88,11 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import { AuthData } from '@/types/user';
 import Regex from '@/constants/Regex';
 
-import RefButton from '@/components/buttons/RefButton.vue';
-import RouteChange from '../components/buttons/RouteChange.vue';
+import BaseButton from '@/components/buttons/BaseButton.vue';
 
 @Component({
   components: {
-    RouteChange,
-    RefButton,
+    BaseButton,
   },
 })
 export default class Register extends Vue {
@@ -118,6 +115,11 @@ export default class Register extends Vue {
   }
 
   private showValidations = false;
+
+  private buttons = [
+    { to: '/', title: 'Back' },
+    { click: this.signUp, title: 'Register' },
+  ]
 
   @Watch('form.email')
   validateEmail(value: string) {
@@ -173,7 +175,6 @@ export default class Register extends Vue {
 
     return (validationEmail && validationPassword && validationPassConf);
   }
-
 
   signUp(): void {
     if (this.isEverythingValidated()) {

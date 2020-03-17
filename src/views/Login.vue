@@ -38,18 +38,15 @@
     </div>
 
     <div class="buttons">
-      <route-change
-        v-for="(route, index) in routes"
-        :key="index"
-        :to="route.target"
-        :title="route.title"
-      />
-      <ref-button
-        class="btn-menu"
-        type="submit"
-        title="Login"
-        @click.native="signIn"
-      />
+      <base-button
+        v-for="(button, key) in buttons"
+        :key="key"
+        :to="button.to"
+
+        @click.native="button.click ? button.click() : null"
+      >
+        {{ button.title }}
+      </base-button>
     </div>
   </div>
 </template>
@@ -57,13 +54,11 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-import RefButton from '@/components/buttons/RefButton.vue';
-import RouteChange from '../components/buttons/RouteChange.vue';
+import BaseButton from '@/components/buttons/BaseButton.vue';
 
 @Component({
   components: {
-    RouteChange,
-    RefButton,
+    BaseButton,
   },
 })
 export default class Login extends Vue {
@@ -74,15 +69,11 @@ export default class Login extends Vue {
 
   private user: firebase.User | null = this.$store.getters.userData;
 
-  private routes = [{ target: '/', title: 'Back' }, { target: '/forgot-password', title: 'Forgot password' }]
-
-  updateEmail(value: string) {
-    this.form.email = value;
-  }
-
-  updatePassword(value: string) {
-    this.form.password = value;
-  }
+  private buttons = [
+    { to: '/', title: 'Back' },
+    { to: '/forgot-password', title: 'Forgot password' },
+    { click: this.signIn, title: 'Login' },
+  ]
 
   private inputs = [{
     vmodel: this.form.email,
@@ -97,6 +88,14 @@ export default class Login extends Vue {
     type: 'password',
     func: this.updatePassword,
   }]
+
+  updateEmail(value: string) {
+    this.form.email = value;
+  }
+
+  updatePassword(value: string) {
+    this.form.password = value;
+  }
 
   signIn(): void {
     this.$store.dispatch('signIn', this.form);

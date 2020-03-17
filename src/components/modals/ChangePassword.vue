@@ -12,12 +12,13 @@
       />
     </form>
 
-    <ref-button
+    <base-button
       slot="footer"
       type="submit"
-      title="Change"
       @click="changePassword"
-    />
+    >
+      Change
+    </base-button>
   </base-modal>
 </template>
 
@@ -29,7 +30,7 @@ import { EventBus } from '@/utils/eventBus';
 
 import BaseModal from '@/components/modals/BaseModal.vue';
 import RefLabelInput from '@/components/inputs/RefLabelInput.vue';
-import RefButton from '@/components/buttons/RefButton.vue';
+import BaseButton from '@/components/buttons/BaseButton.vue';
 
 
 @Component({
@@ -37,7 +38,7 @@ import RefButton from '@/components/buttons/RefButton.vue';
   components: {
     BaseModal,
     RefLabelInput,
-    RefButton,
+    BaseButton,
   },
 })
 export default class ChangePassword extends Vue {

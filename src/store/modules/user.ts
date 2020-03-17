@@ -16,12 +16,12 @@ const user: StoreOptions<UserData> = {
   },
 
   mutations: {
-    signIn(state: UserData, userData: UserData): void {
+    SIGN_IN(state: UserData, userData: UserData): void {
       state.uid = userData.uid;
       state.email = userData.email;
     },
 
-    signOut(state: UserData): void {
+    SIGN_OUT(state: UserData): void {
       state.uid = null;
       state.email = null;
     },
@@ -34,7 +34,7 @@ const user: StoreOptions<UserData> = {
       firebase.auth().signInWithEmailAndPassword(email, password)
         .then((userData): void => {
           if (userData.user && userData.user.emailVerified) {
-            commit('signIn', {
+            commit('SIGN_IN', {
               uid: userData.user.uid,
               email: userData.user.email,
             });
@@ -70,7 +70,7 @@ const user: StoreOptions<UserData> = {
     },
 
     signOut({ commit }): void {
-      commit('signOut');
+      commit('SIGN_OUT');
       router.push('/').catch((): void => {});
     },
 

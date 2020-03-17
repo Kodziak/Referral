@@ -7,4 +7,12 @@ export default [
       requiresAuth: true,
     },
   },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: (): any => import('@/views/Settings.vue'),
+    meta: {
+      requiresAuth: true,
+    },
+  },
 ];

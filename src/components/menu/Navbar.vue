@@ -1,90 +1,69 @@
 <template>
   <div class="nav-bar">
-    <div
-      v-if="user.uid"
-      class="nav-buttons"
-    >
-      <ref-button
-        v-for="(button, index) in authButtons"
-        :key="index"
+    <div class="nav-buttons">
+      <base-button
+        v-for="(button, key) in buttons"
+
+        v-show="(button.auth && user.uid) || (!button.auth && !user.uid)"
+        :key="key"
         :type="button.type"
-        :title="button.title"
+        :to="button.to"
         class="nav-button"
-        @click.native="button.click"
-      />
-      <change-password
-        v-show="isModalVisible"
-        @close="closeModal"
-      />
-    </div>
-    <div
-      v-else
-      class="nav-buttons"
-    >
-      <route-change
-        v-for="(button, index) in buttons"
-        :key="index"
-        :to="button.target"
-        :title="button.title"
-        class="nav-button"
-      />
+
+        @click.native="button.click ? button.click() : null"
+      >
+        {{ button.title }}
+      </base-button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import * as firebase from 'firebase';
 
-import RouteChange from '@/components/buttons/RouteChange.vue';
-import RefButton from '@/components/buttons/RefButton.vue';
-import ChangePassword from '@/components/modals/ChangePassword.vue';
-
-import { EventBus } from '../../utils/eventBus';
+import BaseButton from '@/components/buttons/BaseButton.vue';
 
 @Component({
   components: {
-    RouteChange,
-    RefButton,
-    ChangePassword,
+    BaseButton,
   },
 })
 export default class Navbar extends Vue {
   user: firebase.User | null = this.$store.getters.userData;
   isModalVisible = false;
 
-  showModal() {
-    this.isModalVisible = true;
-  }
-
-  @Watch('isModalVisible')
-  closeModal() {
-    EventBus.$on('closeModal', () => {
-      this.isModalVisible = false;
-    });
-  }
+  private buttons = [
+    {
+      title: 'Login',
+      to: '/login',
+      auth: false,
+    }, {
+      title: 'Register',
+      to: '/register',
+      auth: false,
+    },
+    {
+      title: 'Dashboard',
+      to: '/dashboard',
+      auth: true,
+    },
+    {
+      title: 'Settings',
+      to: '/settings',
+      auth: true,
+    },
+    {
+      type: 'button',
+      title: 'Sign out',
+      click: this.signOut,
+      auth: true,
+    },
+  ]
 
   async signOut(): Promise<void> {
     this.$store.dispatch('signOut');
   }
-
-  authButtons = [{
-    type: 'button',
-    title: 'Change password',
-    click: this.showModal,
-  }, {
-    type: 'button',
-    title: 'Sign out',
-    click: this.signOut,
-  }]
-
-  buttons = [{
-    title: 'Login',
-    target: '/login',
-  }, {
-    title: 'Register',
-    target: '/register',
-  }]
 }
 </script>
 

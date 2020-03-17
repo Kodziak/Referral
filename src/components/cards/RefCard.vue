@@ -32,11 +32,12 @@
       Description: {{ referral.description }}
     </p>
 
-    <ref-button
+    <base-button
       type="button"
-      title="Edit"
       @click.native="showModal"
-    />
+    >
+      Edit
+    </base-button>
     <referral-modal
       v-show="isModalVisible"
       :referral-val="referral"
@@ -55,7 +56,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import { EventBus } from '@/utils/eventBus';
 
 import RefLabelInput from '@/components/inputs/RefLabelInput.vue';
-import RefButton from '@/components/buttons/RefButton.vue';
+import BaseButton from '@/components/buttons/BaseButton.vue';
 import ReferralModal from '@/components/modals/Referral.vue';
 
 @Component({
@@ -68,7 +69,7 @@ import ReferralModal from '@/components/modals/Referral.vue';
   },
   components: {
     RefLabelInput,
-    RefButton,
+    BaseButton,
     ReferralModal,
   },
 })
