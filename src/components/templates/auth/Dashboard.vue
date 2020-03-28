@@ -1,31 +1,43 @@
 <template>
-  <div class="referrals">
-    <ref-card
-      v-for="(referral, index) in referrals"
-      :key="index"
-      :referral="referral"
-      class="referrals__card"
-    />
+  <div class="dashboard">
+    <h1>Secure dashboard</h1>
+
+    <ref-menu />
+
+    <div class="referrals">
+      <ref-card
+        v-for="(referral, index) in referrals"
+        :key="index"
+        :referral="referral"
+        class="referrals__card"
+      />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+
 import * as NProgress from 'nprogress';
 import * as firebase from 'firebase';
 
-import RefCard from './RefCard.vue';
+import RefMenu from '@/components/menu/RefMenu.vue';
+import RefCards from '@/components/cards/RefCards.vue';
+
+import userMixin from '@/mixins/user';
 
 @Component({
   components: {
-    RefCard,
+    RefCards,
+    RefMenu,
   },
 })
-export default class RefCards extends Vue {
+export default class Dashboard extends Vue {
   referrals: firebase.firestore.DocumentData = [];
   user: firebase.User | null = null;
 
-  created() {
+  async created() {
+    this.user = await userMixin.getUser();
     this.getUser();
   }
 
@@ -59,6 +71,7 @@ export default class RefCards extends Vue {
   }
 }
 </script>
+
 
 <style lang="scss">
 .referrals {
