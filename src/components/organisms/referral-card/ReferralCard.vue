@@ -10,7 +10,7 @@
       {{ referral.title }}
     </h3>
 
-    <ref-label-input
+    <v-m-label-input-copy
       :value="referral.baseUrl"
       :copy="true"
       :readonly="true"
@@ -19,7 +19,7 @@
       class="card__input"
     />
 
-    <ref-label-input
+    <v-m-label-input-copy
       :value="referral.referralUrl"
       :copy="true"
       :readonly="true"
@@ -32,12 +32,12 @@
       Description: {{ referral.description }}
     </p>
 
-    <base-button
+    <v-a-button
       type="button"
       @click.native="showModal"
     >
       Edit
-    </base-button>
+    </v-a-button>
     <referral-modal
       v-show="isModalVisible"
       :referral-val="referral"
@@ -55,9 +55,10 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 
 import { EventBus } from '@/utils/eventBus';
 
-import RefLabelInput from '@/components/inputs/RefLabelInput.vue';
-import BaseButton from '@/components/buttons/BaseButton.vue';
 import ReferralModal from '@/components/modals/Referral.vue';
+
+import VMLabelInputCopy from '@/components/molecules/label-input-copy/LabelInputCopy.vue';
+import VAButton from '@/components/atoms/button/Button.vue';
 
 @Component({
   name: 'RefCard',
@@ -68,8 +69,8 @@ import ReferralModal from '@/components/modals/Referral.vue';
     },
   },
   components: {
-    RefLabelInput,
-    BaseButton,
+    VMLabelInputCopy,
+    VAButton,
     ReferralModal,
   },
 })

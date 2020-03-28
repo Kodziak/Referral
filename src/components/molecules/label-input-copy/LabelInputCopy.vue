@@ -31,7 +31,7 @@
 import { Component, Vue, Emit } from 'vue-property-decorator';
 
 @Component({
-  name: 'RefInput',
+  name: 'LabelInputCopy',
   props: {
     type: String,
     labelId: String,
@@ -41,19 +41,19 @@ import { Component, Vue, Emit } from 'vue-property-decorator';
     readonly: Boolean,
   },
 })
-export default class RefInput extends Vue {
-@Emit('value-changed')
+export default class LabelInputCopy extends Vue {
+  @Emit('value-changed')
   updateInput(event: any): void {
     return event.target.value;
   }
 
-onCopy(e: any): void {
-  console.log(`You just copied: ${e.text}`);
-}
+  onCopy(e: any): void {
+    console.log(`You just copied: ${e.text}`);
+  }
 
-onError(): void {
-  throw new Error('Failed to copy text.');
-}
+  onError(): void {
+    throw new Error('Failed to copy text.');
+  }
 }
 </script>
 

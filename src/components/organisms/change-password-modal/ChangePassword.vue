@@ -1,7 +1,7 @@
 <template>
   <base-modal :props="modalAttributes">
     <form slot="body">
-      <ref-label-input
+      <v-m-label-input-copy
         v-for="(input, index) in inputs"
         :key="index"
         v-model="input.vmodel"
@@ -12,13 +12,13 @@
       />
     </form>
 
-    <base-button
+    <v-a-button
       slot="footer"
       type="submit"
       @click="changePassword"
     >
       Change
-    </base-button>
+    </v-a-button>
   </base-modal>
 </template>
 
@@ -29,16 +29,16 @@ import * as firebase from 'firebase';
 import { EventBus } from '@/utils/eventBus';
 
 import BaseModal from '@/components/modals/BaseModal.vue';
-import RefLabelInput from '@/components/inputs/RefLabelInput.vue';
-import BaseButton from '@/components/buttons/BaseButton.vue';
+import VMLabelInputCopy from '@/components/molecules/label-input-copy/LabelInputCopy.vue';
+import VAButton from '@/components/atoms/button/Button.vue';
 
 
 @Component({
   name: 'ChangePassword',
   components: {
+    VAButton,
+    VMLabelInputCopy,
     BaseModal,
-    RefLabelInput,
-    BaseButton,
   },
 })
 export default class ChangePassword extends Vue {

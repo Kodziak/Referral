@@ -22,7 +22,7 @@
         </button>
         <button
           type="submit"
-          @click.prevent="forgotPassword"
+          @click.prevent="dispatchForgotPassword"
         >
           Login
         </button>
@@ -34,15 +34,17 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
-@Component
-export default class ForgotPassword extends Vue {
-  email: string = '';
+@Component({
+  name: 'ForgotPasswordTemplate',
+})
+export default class ForgotPasswordTemplate extends Vue {
+  private email: string = '';
 
-  back(e: Event): void {
+  back(): void {
     this.$router.push('login');
   }
 
-  forgotPassword(e: Event): void {
+  dispatchForgotPassword(): void {
     this.$store.dispatch('forgotPassword', this.email);
   }
 }

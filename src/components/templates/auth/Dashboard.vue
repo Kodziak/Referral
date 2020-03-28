@@ -16,23 +16,29 @@
 </template>
 
 <script lang="ts">
+// TODO: dashboard should be feed with:
+// UserData and Referrals belongs to user, depends on this information - should create cards
+
+// All data like 'Secure dashboard' is in data/ directory, maybe locales/ if I will create other language than en
+
+// Move Ref-menu and Ref-card to organism, smth like: ReferralContainer
+
 import { Component, Vue } from 'vue-property-decorator';
 
 import * as NProgress from 'nprogress';
 import * as firebase from 'firebase';
 
-import RefMenu from '@/components/menu/RefMenu.vue';
-import RefCards from '@/components/cards/RefCards.vue';
+import RefMenu from '@/components/molecules/referral-menu/Menu.vue';
 
 import userMixin from '@/mixins/user';
 
 @Component({
+  name: 'DashboardTemplate',
   components: {
-    RefCards,
     RefMenu,
   },
 })
-export default class Dashboard extends Vue {
+export default class DashboardTemplate extends Vue {
   referrals: firebase.firestore.DocumentData = [];
   user: firebase.User | null = null;
 
@@ -72,8 +78,7 @@ export default class Dashboard extends Vue {
 }
 </script>
 
-
-<style lang="scss">
+<style lang="scss" scoped>
 .referrals {
   display: flex;
   flex-direction: row;

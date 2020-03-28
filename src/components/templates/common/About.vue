@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="v-t-about">
     <h1><slot /></h1>
   </div>
 </template>

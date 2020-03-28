@@ -1,7 +1,7 @@
 <template>
   <div class="nav-bar">
     <div class="nav-buttons">
-      <base-button
+      <v-a-button
         v-for="(button, key) in buttons"
 
         v-show="(button.auth && user.uid) || (!button.auth && !user.uid)"
@@ -13,7 +13,7 @@
         @click.native="button.click ? button.click() : null"
       >
         {{ button.title }}
-      </base-button>
+      </v-a-button>
     </div>
   </div>
 </template>
@@ -22,11 +22,11 @@
 import { Component, Vue } from 'vue-property-decorator';
 import * as firebase from 'firebase';
 
-import BaseButton from '@/components/buttons/BaseButton.vue';
+import VAButton from '@/components/atoms/button/Button.vue';
 
 @Component({
   components: {
-    BaseButton,
+    VAButton,
   },
 })
 export default class Navbar extends Vue {

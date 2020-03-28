@@ -1,14 +1,14 @@
 <template>
   <router-link
     v-if="to"
-    class="btn"
+    class="v-a-btn"
     :to="to"
   >
     <slot />
   </router-link>
   <button
     v-else
-    class="btn"
+    class="v-a-btn"
   >
     <slot />
   </button>

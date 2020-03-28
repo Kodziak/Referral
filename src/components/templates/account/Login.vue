@@ -38,7 +38,7 @@
     </div>
 
     <div class="buttons">
-      <base-button
+      <v-a-button
         v-for="(button, key) in buttons"
         :key="key"
         :to="button.to"
@@ -46,33 +46,44 @@
         @click.native="button.click ? button.click() : null"
       >
         {{ button.title }}
-      </base-button>
+      </v-a-button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { AuthData, User } from '../../../types/user';
 
-import BaseButton from '@/components/buttons/BaseButton.vue';
+import VAButton from '@/components/atoms/button/Button.vue';
 
 @Component({
+  name: 'LoginTemplate',
   components: {
-    BaseButton,
+    VAButton,
   },
 })
-export default class Login extends Vue {
-  private form: {email: null | string; password: null | string} = {
-    email: null,
-    password: null,
+export default class LoginTemplate extends Vue {
+  private user: User = this.$store.getters.userData;
+
+  private form: AuthData = {
+    email: '',
+    password: '',
   }
 
-  private user: firebase.User | null = this.$store.getters.userData;
-
   private buttons = [
-    { to: '/', title: 'Back' },
-    { to: '/forgot-password', title: 'Forgot password' },
-    { click: this.signIn, title: 'Login' },
+    {
+      to: '/',
+      title: 'Back',
+    },
+    {
+      to: '/forgot-password',
+      title: 'Forgot password',
+    },
+    {
+      click: this.signIn,
+      title: 'Login',
+    },
   ]
 
   private inputs = [{

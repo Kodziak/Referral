@@ -88,14 +88,16 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 import { AuthData } from '@/types/user';
 import Regex from '@/constants/Regex';
 
-import BaseButton from '@/components/buttons/BaseButton.vue';
+import VAButton from '@/components/atoms/button/Button.vue';
 
 @Component({
+  name: 'RegisterTemplate',
   components: {
-    BaseButton,
+    VAButton,
   },
 })
-export default class Register extends Vue {
+export default class RegisterTemplate extends Vue {
+  private showValidations = false;
   private form: AuthData = {
     email: '',
     password: '',
@@ -113,8 +115,6 @@ export default class Register extends Vue {
     },
     passwordConfirmation: true,
   }
-
-  private showValidations = false;
 
   private buttons = [
     { to: '/', title: 'Back' },

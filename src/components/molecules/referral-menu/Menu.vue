@@ -1,12 +1,12 @@
 <template>
   <div class="ref-menu">
-    <base-button
+    <v-a-button
       type="button"
       class="btn-menu"
       @click.native="showModal"
     >
       Add Referral
-    </base-button>
+    </v-a-button>
 
     <referral-modal
       v-show="isModalVisible"
@@ -19,14 +19,14 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import * as firebase from 'firebase';
 
-import { EventBus } from '../../utils/eventBus';
+import { EventBus } from '@/utils/eventBus';
 
-import BaseButton from '@/components/buttons/BaseButton.vue';
+import VAButton from '@/components/atoms/button/Button.vue';
 import ReferralModal from '@/components/modals/Referral.vue';
 
 @Component({
   components: {
-    BaseButton,
+    VAButton,
     ReferralModal,
   },
 })

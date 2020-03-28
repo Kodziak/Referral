@@ -3,7 +3,7 @@
     <h1>Settings</h1>
     <h2>{{ user.email }}</h2>
 
-    <base-button
+    <v-a-button
       v-for="(button, index) in authButtons"
       :key="index"
       :type="button.type"
@@ -11,7 +11,7 @@
       @click.native="button.click"
     >
       {{ button.title }}
-    </base-button>
+    </v-a-button>
     <change-password
       v-show="isModalVisible"
       @close="closeModal"
@@ -25,14 +25,15 @@ import * as NProgress from 'nprogress';
 
 import { EventBus } from '@/utils/eventBus';
 
-import BaseButton from '@/components/buttons/BaseButton.vue';
+import VAButton from '@/components/atoms/button/Button.vue';
 
 @Component({
+  name: 'SettingsTemplate',
   components: {
-    BaseButton,
+    VAButton,
   },
 })
-export default class Dashboard extends Vue {
+export default class SettingsTemplate extends Vue {
   user: firebase.User | null = this.$store.getters.userData;
 
   // eslint-disable-next-line class-methods-use-this

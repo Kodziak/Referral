@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    HomePage
+  <div class="v-p-home">
+    <h1><slot /></h1>
   </div>
 </template>
 
@@ -8,15 +8,15 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
-  components: {
-  },
+  name: 'HomeTemplate',
 })
-export default class Home extends Vue {
+export default class HomeTemplate extends Vue {
 }
 </script>
 
+
 <style lang="scss" scoped>
-.home {
+.v-p-home {
   margin: 10px;
 }
 </style>

@@ -1,17 +1,17 @@
 <template>
-  <vue-template-about>
+  <v-t-about>
     This is an about page
-  </vue-template-about>
+  </v-t-about>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import VueTemplateAbout from '@/components/templates/common/About.vue';
+import VTAbout from '@/components/templates/common/About.vue';
 
 @Component({
   name: 'AboutPage',
   components: {
-    VueTemplateAbout,
+    VTAbout,
   },
 })
 export default class AboutPage extends Vue {
