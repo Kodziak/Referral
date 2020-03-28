@@ -115,7 +115,7 @@ export default class LoginTemplate extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/components/inputs/_input.scss';
+@import '@/components/atoms/input/_input.scss';
 
 .login-form {
   display: flex;

@@ -22,7 +22,7 @@ import * as firebase from 'firebase';
 import { EventBus } from '@/utils/eventBus';
 
 import VAButton from '@/components/atoms/button/Button.vue';
-import ReferralModal from '@/components/modals/Referral.vue';
+import ReferralModal from '@/components/organisms/AddEditReferral.vue';
 
 @Component({
   components: {

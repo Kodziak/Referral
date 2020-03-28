@@ -69,7 +69,7 @@
     </form>
 
     <div class="buttons">
-      <base-button
+      <v-a-button
         v-for="(button, key) in buttons"
         :key="key"
         :to="button.to"
@@ -77,7 +77,7 @@
         @click.native="button.click ? button.click() : null"
       >
         {{ button.title }}
-      </base-button>
+      </v-a-button>
     </div>
   </div>
 </template>
@@ -187,7 +187,8 @@ export default class RegisterTemplate extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import '@/components/inputs/_input.scss';
+@import '@/components/atoms/input/_input.scss';
+
 .register-form {
   display: flex;
   flex-direction: column;

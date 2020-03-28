@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <navbar />
+    <v-o-navbar />
     <transition
       name="component-fade"
       mode="out-in"
@@ -14,11 +14,11 @@
 <script lang="ts">
 /* eslint-disable vue-scoped-css/require-scoped */
 import { Component, Vue } from 'vue-property-decorator';
-import Navbar from '@/components/menu/Navbar.vue';
+import VONavbar from '@/components/organisms/nav-bar/Navbar.vue';
 
 @Component({
   components: {
-    Navbar,
+    VONavbar,
   },
 })
 export default class App extends Vue {

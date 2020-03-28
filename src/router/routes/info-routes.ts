@@ -6,16 +6,16 @@ export default [
   {
     path: '/error',
     name: 'error',
-    component: () => import('@/views/Error.vue'),
+    component: () => import('@/components/pages/common/Error.vue'),
   },
   {
     path: '/',
     name: 'home',
-    component: () => import('@/views/Home.vue'),
+    component: () => import('@/components/pages/common/Home.vue'),
   },
   {
     path: '/about',
     name: 'about',
-    component: () => import('@/views/About.vue'),
+    component: () => import('@/components/pages/common/About.vue'),
   },
 ];

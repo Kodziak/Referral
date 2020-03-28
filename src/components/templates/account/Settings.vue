@@ -12,7 +12,8 @@
     >
       {{ button.title }}
     </v-a-button>
-    <change-password
+
+    <v-o-change-password
       v-show="isModalVisible"
       @close="closeModal"
     />
@@ -26,11 +27,13 @@ import * as NProgress from 'nprogress';
 import { EventBus } from '@/utils/eventBus';
 
 import VAButton from '@/components/atoms/button/Button.vue';
+import VOChangePassword from '@/components/organisms/change-password-modal/ChangePassword.vue';
 
 @Component({
   name: 'SettingsTemplate',
   components: {
     VAButton,
+    VOChangePassword,
   },
 })
 export default class SettingsTemplate extends Vue {

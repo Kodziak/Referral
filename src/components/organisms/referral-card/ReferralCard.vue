@@ -55,7 +55,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator';
 
 import { EventBus } from '@/utils/eventBus';
 
-import ReferralModal from '@/components/modals/Referral.vue';
+import ReferralModal from '@/components/organisms/AddEditReferral.vue';
 
 import VMLabelInputCopy from '@/components/molecules/label-input-copy/LabelInputCopy.vue';
 import VAButton from '@/components/atoms/button/Button.vue';

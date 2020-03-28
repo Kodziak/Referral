@@ -2,14 +2,13 @@ import Vue from 'vue';
 import VueRouter, {
   Route, RouteRecord, RawLocation,
 } from 'vue-router';
-import NProgress from 'nprogress';
+import * as NProgress from 'nprogress';
 
 import userRoutes from './routes/user-routes';
 import authRoutes from './routes/auth-routes';
 import infoRoutes from './routes/info-routes';
 
 import storage from '@/mixins/storage';
-
 
 Vue.use(VueRouter);
 

@@ -28,7 +28,8 @@ import * as firebase from 'firebase';
 
 import { EventBus } from '@/utils/eventBus';
 
-import BaseModal from '@/components/modals/BaseModal.vue';
+import BaseModal from '@/components/molecules/modal/Modal.vue';
+
 import VMLabelInputCopy from '@/components/molecules/label-input-copy/LabelInputCopy.vue';
 import VAButton from '@/components/atoms/button/Button.vue';
 

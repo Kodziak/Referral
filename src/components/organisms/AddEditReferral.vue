@@ -1,28 +1,28 @@
 <template>
   <base-modal :props="modalAttributes">
     <div slot="body">
-      <ref-label-input
+      <v-m-label-input-copy
         type="text"
         label-id="ref-input-title"
         label="Title"
         :value="(referralVal) ? referralVal.title : referralValNew.title"
         @value-changed="updateTitle"
       />
-      <ref-label-input
+      <v-m-label-input-copy
         type="text"
         label-id="ref-input-ref-url"
         label="Referral Url"
         :value="(referralVal) ? referralVal.referralUrl : referralValNew.referralUrl"
         @value-changed="updateReferralUrl"
       />
-      <ref-label-input
+      <v-m-label-input-copy
         type="text"
         label-id="ref-input-base-url"
         label="Base Url"
         :value="(referralVal) ? referralVal.baseUrl : referralValNew.baseUrl"
         @value-changed="updateBaseUrl"
       />
-      <ref-label-input
+      <v-m-label-input-copy
         type="text"
         label-id="ref-input-description"
         label="Description"
@@ -31,13 +31,13 @@
       />
     </div>
 
-    <base-button
+    <v-a-button
       slot="footer"
       type="submit"
       @click.native="referralVal ? updateReferral(referralVal) : addReferral"
     >
       {{ referralVal ? 'Update' : 'Add Referral' }}
-    </base-button>
+    </v-a-button>
   </base-modal>
 </template>
 
@@ -47,16 +47,17 @@ import { Component, Vue } from 'vue-property-decorator';
 import { EventBus } from '@/utils/eventBus';
 import { Referral } from '@/types/';
 
-import BaseModal from '@/components/modals/BaseModal.vue';
-import RefLabelInput from '@/components/inputs/RefLabelInput.vue';
-import BaseButton from '@/components/buttons/BaseButton.vue';
+import BaseModal from '@/components/molecules/modal/Modal.vue';
+
+import VMLabelInputCopy from '@/components/molecules/label-input-copy/LabelInputCopy.vue';
+import VAButton from '@/components/atoms/button/Button.vue';
 
 @Component({
   name: 'RefModal',
   components: {
     BaseModal,
-    RefLabelInput,
-    BaseButton,
+    VMLabelInputCopy,
+    VAButton,
   },
   props: {
     referralVal: {

@@ -29,6 +29,7 @@ import * as NProgress from 'nprogress';
 import * as firebase from 'firebase';
 
 import RefMenu from '@/components/molecules/referral-menu/Menu.vue';
+import RefCard from '@/components/organisms/referral-card/ReferralCard.vue';
 
 import userMixin from '@/mixins/user';
 
@@ -36,6 +37,7 @@ import userMixin from '@/mixins/user';
   name: 'DashboardTemplate',
   components: {
     RefMenu,
+    RefCard,
   },
 })
 export default class DashboardTemplate extends Vue {

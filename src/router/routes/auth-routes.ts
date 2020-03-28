@@ -2,7 +2,7 @@ export default [
   {
     path: '/dashboard',
     name: 'dashboard',
-    component: (): any => import('@/views/Dashboard.vue'),
+    component: () => import('@/components/pages/auth/Dashboard.vue'),
     meta: {
       requiresAuth: true,
     },
@@ -10,7 +10,7 @@ export default [
   {
     path: '/settings',
     name: 'settings',
-    component: (): any => import('@/views/Settings.vue'),
+    component: () => import('@/components/pages/account/Settings.vue'),
     meta: {
       requiresAuth: true,
     },
