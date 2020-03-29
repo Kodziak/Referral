@@ -2,9 +2,9 @@ import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
 import VuexPersist from 'vuex-persist';
 
-import { UserData } from '@/types/user';
 import user from './modules/user';
 import referral from './modules/referral';
+import { UserData } from '@/types/user';
 
 Vue.use(Vuex);
 

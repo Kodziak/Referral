@@ -1,8 +1,10 @@
+import { Router } from '@/types';
+
 export default [
   {
     path: '/dashboard',
     name: 'dashboard',
-    component: () => import('@/components/pages/auth/Dashboard.vue'),
+    component: (): Router.ComponentImport => import('@/components/pages/auth/Dashboard.vue'),
     meta: {
       requiresAuth: true,
     },
@@ -10,7 +12,7 @@ export default [
   {
     path: '/settings',
     name: 'settings',
-    component: () => import('@/components/pages/account/Settings.vue'),
+    component: (): Router.ComponentImport => import('@/components/pages/account/Settings.vue'),
     meta: {
       requiresAuth: true,
     },
