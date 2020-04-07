@@ -30,15 +30,9 @@ import { EventBus } from '@/utils/eventBus';
 
 import BaseModal from '@/components/molecules/modal/Modal.vue';
 
-import VMLabelInputCopy from '@/components/molecules/label-input-copy/LabelInputCopy.vue';
-import VAButton from '@/components/atoms/button/Button.vue';
-
-
 @Component({
   name: 'ChangePassword',
   components: {
-    VAButton,
-    VMLabelInputCopy,
     BaseModal,
   },
 })

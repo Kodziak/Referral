@@ -4,7 +4,7 @@ import VuexPersist from 'vuex-persist';
 
 import user from './modules/user';
 import referral from './modules/referral';
-import { UserData } from '@/types/user';
+import { User } from '@/types';
 
 Vue.use(Vuex);
 
@@ -13,7 +13,7 @@ const vuexStorage = new VuexPersist<RootState>({
   storage: window.localStorage,
 });
 
-interface RootState extends UserData {
+interface RootState extends User.UserData {
   items: [];
 }
 

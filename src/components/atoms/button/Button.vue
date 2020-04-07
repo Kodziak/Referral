@@ -18,12 +18,12 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
-  name: 'BaseButton',
+  name: 'VAButton',
   props: {
     to: String,
   },
 })
-export default class BaseButton extends Vue {}
+export default class VAButton extends Vue {}
 </script>
 
 <style lang="scss" scoped>

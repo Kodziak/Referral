@@ -2,11 +2,14 @@ import Vue from 'vue';
 import VueClipboard from 'vue-clipboard2';
 import VueCookies from 'vue-cookies';
 import firebase from 'firebase';
+
+import App from './App.vue';
 import store from '@/store';
 import router from '@/router';
+
 import './registerServiceWorker';
 import 'nprogress/nprogress.css';
-import App from './App.vue';
+import '@/components/index';
 
 Vue.config.productionTip = false;
 

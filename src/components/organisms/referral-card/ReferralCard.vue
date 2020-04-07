@@ -57,9 +57,6 @@ import { EventBus } from '@/utils/eventBus';
 
 import ReferralModal from '@/components/organisms/AddEditReferral.vue';
 
-import VMLabelInputCopy from '@/components/molecules/label-input-copy/LabelInputCopy.vue';
-import VAButton from '@/components/atoms/button/Button.vue';
-
 @Component({
   name: 'RefCard',
   props: {
@@ -69,8 +66,6 @@ import VAButton from '@/components/atoms/button/Button.vue';
     },
   },
   components: {
-    VMLabelInputCopy,
-    VAButton,
     ReferralModal,
   },
 })

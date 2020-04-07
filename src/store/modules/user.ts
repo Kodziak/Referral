@@ -1,34 +1,34 @@
 import firebase from 'firebase';
 import { StoreOptions } from 'vuex';
 
-import { AuthData, UserData } from '@/types/user';
+import { User } from '@/types';
 import router from '@/router';
 
-const user: StoreOptions<UserData> = {
+const user: StoreOptions<User.UserData> = {
   state: {
     uid: null,
     email: null,
   },
 
   getters: {
-    userData: (state: UserData): UserData => state,
+    userData: (state: User.UserData): User.UserData => state,
     currentUser: (): firebase.User | null => firebase.auth().currentUser,
   },
 
   mutations: {
-    SIGN_IN(state: UserData, userData: UserData): void {
+    SIGN_IN(state: User.UserData, userData: User.UserData): void {
       state.uid = userData.uid;
       state.email = userData.email;
     },
 
-    SIGN_OUT(state: UserData): void {
+    SIGN_OUT(state: User.UserData): void {
       state.uid = null;
       state.email = null;
     },
   },
 
   actions: {
-    signIn({ commit }, authData: AuthData): void {
+    signIn({ commit }, authData: User.AuthData): void {
       const { email, password } = authData;
 
       firebase.auth().signInWithEmailAndPassword(email, password)
@@ -47,7 +47,7 @@ const user: StoreOptions<UserData> = {
         });
     },
 
-    signUp({ commit }, authData: AuthData): void {
+    signUp({ commit }, authData: User.AuthData): void {
       const { email, password } = authData;
 
       firebase.auth().createUserWithEmailAndPassword(email, password)

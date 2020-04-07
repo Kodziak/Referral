@@ -1,6 +1,6 @@
-import * as User from './user';
-import * as Router from './router';
-import * as Referral from './referral';
+import * as User from './modules/user';
+import * as Router from './modules/router';
+import * as Referral from './modules/referral';
 
 export {
   User,
